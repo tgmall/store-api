@@ -12,7 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 fun initDB() {
-    val url = "jdbc:h2:mem:;DATABASE_TO_UPPER=false;MODE=MYSQL"
+    val url = "jdbc:h2:mem:test;DATABASE_TO_UPPER=false;MODE=MYSQL;DB_CLOSE_DELAY=-1"
     val driver = "org.h2.Driver"
     Database.connect(url, driver)
     transaction {
