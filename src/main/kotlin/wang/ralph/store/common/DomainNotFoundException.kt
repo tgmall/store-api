@@ -1,4 +1,4 @@
-package wang.ralph.blog.demo.models
+package wang.ralph.store.common
 
 import java.util.*
 

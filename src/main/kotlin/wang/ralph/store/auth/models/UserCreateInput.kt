@@ -1,9 +1,9 @@
-package wang.ralph.blog.demo.application
+package wang.ralph.store.auth.models
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 
 @GraphQLDescription("创建/更新用户信息")
-data class UserInput(
+data class UserCreateInput(
     @GraphQLDescription("用户名")
     val username: String,
     @GraphQLDescription("密码")

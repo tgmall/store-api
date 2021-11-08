@@ -1,4 +1,4 @@
-package wang.ralph.blog.demo.plugins
+package wang.ralph.store.plugins
 
 import io.ktor.application.*
 import io.ktor.features.*

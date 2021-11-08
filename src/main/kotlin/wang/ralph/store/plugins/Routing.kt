@@ -1,12 +1,15 @@
-package wang.ralph.blog.demo.plugins
+package wang.ralph.store.plugins
 
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import wang.ralph.blog.demo.models.DomainNotFoundException
-import wang.ralph.graphql.graphqlAll
+import wang.ralph.graphql.graphql
+import wang.ralph.graphql.graphqlPlayground
+import wang.ralph.graphql.graphqlSchema
+import wang.ralph.store.common.DomainNotFoundException
 import javax.security.auth.login.CredentialNotFoundException
 
 fun Application.configureRouting() {
@@ -29,6 +32,10 @@ fun Application.configureRouting() {
         }
     }
     routing {
-        graphqlAll()
+        graphqlSchema()
+        graphqlPlayground()
+        authenticate("basic") {
+            graphql()
+        }
     }
 }

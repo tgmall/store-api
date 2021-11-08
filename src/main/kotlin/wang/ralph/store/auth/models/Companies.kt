@@ -1,4 +1,4 @@
-package wang.ralph.blog.demo.models
+package wang.ralph.store.auth.models
 
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
@@ -9,12 +9,12 @@ import java.util.*
 object Companies : UUIDTable("company") {
 }
 
-class CompanyDAO(id: EntityID<UUID>) : UUIDEntity(id) {
-    companion object : UUIDEntityClass<CompanyDAO>(Companies)
+class Company(id: EntityID<UUID>) : UUIDEntity(id) {
+    companion object : UUIDEntityClass<Company>(Companies)
 
-    fun toCompany(): Company = Company(id.value)
+    fun toDto(): CompanyDto = CompanyDto(id.toString())
 }
 
-data class Company(
-    override val id: UUID,
+data class CompanyDto(
+    override val id: String,
 ) : Subject(id)

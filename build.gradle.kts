@@ -11,10 +11,10 @@ plugins {
     kotlin("jvm") version "1.5.31"
 }
 
-group = "wang.ralph.blog.demo"
+group = "wang.ralph.store"
 version = "0.0.1"
 application {
-    mainClass.set("wang.ralph.blog.demo.ApplicationKt")
+    mainClass.set("wang.ralph.store.ApplicationKt")
 }
 
 repositories {
@@ -38,7 +38,6 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java:$mysql_version")
     testImplementation("com.h2database:h2:$h2_version")
 
-    implementation("com.expediagroup:graphql-kotlin-ktor-client:5.2.0")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
 }
