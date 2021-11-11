@@ -1,8 +1,8 @@
 package wang.ralph.store.auth.models
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.auth.utils.initTestingData
-import wang.ralph.store.auth.utils.setupTestingDb
+import wang.ralph.store.setup.initTestingUserData
+import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,7 +13,7 @@ internal class UserTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingData()
+            initTestingUserData()
         }
     }
 

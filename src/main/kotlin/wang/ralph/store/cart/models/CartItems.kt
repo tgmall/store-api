@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import java.util.*
 
 object CartItems : UUIDTable("cart_item") {
-    val cart = reference("cart", Carts)
+    val cart = reference("cart_id", Carts)
     val skuId = uuid("sku_id")
     val amount = integer("amount")
 }

@@ -10,12 +10,13 @@ import wang.ralph.graphql.GraphQLRequest
 import wang.ralph.graphql.configureGraphQL
 import wang.ralph.store.auth.graphql.UserQuery
 import wang.ralph.store.auth.models.User
-import wang.ralph.store.auth.utils.initTestingData
-import wang.ralph.store.auth.utils.setupTestingDb
-import wang.ralph.store.auth.utils.testingUser
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSerialization
 import wang.ralph.store.plugins.toPrincipal
+import wang.ralph.store.setup.initTestingCartData
+import wang.ralph.store.setup.initTestingProductData
+import wang.ralph.store.setup.initTestingUserData
+import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -27,7 +28,9 @@ class ApplicationTest {
     fun testUsers() {
         setupTestingDb()
         transaction {
-            initTestingData()
+            initTestingUserData()
+            initTestingCartData()
+            initTestingProductData()
         }
         withTestApplication({
             authentication {
@@ -46,7 +49,7 @@ class ApplicationTest {
         }) {
             val query: String = """
         query {
-            user(id: "${testingUser.id}") {
+            user {
                 username
             }
         }

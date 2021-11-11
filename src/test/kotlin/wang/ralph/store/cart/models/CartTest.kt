@@ -1,9 +1,9 @@
 package wang.ralph.store.cart.models
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.auth.utils.initTestingData
-import wang.ralph.store.auth.utils.setupTestingDb
-import wang.ralph.store.auth.utils.testingUser
+import wang.ralph.store.setup.initTestingCartData
+import wang.ralph.store.setup.setupTestingDb
+import wang.ralph.store.setup.testingUser
 import java.util.*
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -14,7 +14,7 @@ internal class CartTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingData()
+            initTestingCartData()
         }
     }
 
