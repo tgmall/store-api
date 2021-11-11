@@ -12,7 +12,7 @@ import wang.ralph.store.auth.graphql.UserQuery
 import wang.ralph.store.auth.models.User
 import wang.ralph.store.auth.utils.initTestingData
 import wang.ralph.store.auth.utils.setupTestingDb
-import wang.ralph.store.auth.utils.testingUserId
+import wang.ralph.store.auth.utils.testingUser
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSerialization
 import wang.ralph.store.plugins.toPrincipal
@@ -46,7 +46,7 @@ class ApplicationTest {
         }) {
             val query: String = """
         query {
-            user(id: "$testingUserId") {
+            user(id: "${testingUser.id}") {
                 username
             }
         }
