@@ -31,9 +31,7 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
         }
 
         fun create(userInput: UserCreateInput): User {
-            val subject = Person.new {
-                name = userInput.nickName
-            }
+            val subject = Subject.newPerson(userInput.nickName)
             return User.new {
                 subjectId = subject.id.value
                 username = userInput.username
