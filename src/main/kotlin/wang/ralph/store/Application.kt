@@ -15,6 +15,7 @@ import wang.ralph.store.plugins.configureSecurity
 import wang.ralph.store.plugins.configureSerialization
 import wang.ralph.store.setup.initTestingCartData
 import wang.ralph.store.setup.initTestingProductData
+import wang.ralph.store.setup.initTestingTagData
 import wang.ralph.store.setup.initTestingUserData
 
 fun initDB() {
@@ -29,6 +30,7 @@ fun main() {
         initTestingUserData()
         initTestingCartData()
         initTestingProductData()
+        initTestingTagData()
     }
     embeddedServer(Netty, port = 28081, watchPaths = listOf("classes")) {
         configureGraphQL(

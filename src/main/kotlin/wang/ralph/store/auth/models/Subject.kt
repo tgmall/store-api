@@ -33,16 +33,16 @@ class Subject(id: EntityID<UUID>) : UUIDEntity(id) {
     var type: SubjectType by Subjects.type
 
     fun toDto(): SubjectDto = when (type) {
-        SubjectType.Person -> PersonDto(id.value, name)
-        SubjectType.Company -> CompanyDto(id.value, name)
+        SubjectType.Person -> PersonDto(id.toString(), name)
+        SubjectType.Company -> CompanyDto(id.toString(), name)
     }
 }
 
 
 interface SubjectDto {
-    val id: UUID
+    val id: String
     val name: String
 }
 
-class PersonDto(override val id: UUID, override val name: String) : SubjectDto
-class CompanyDto(override val id: UUID, override val name: String) : SubjectDto
+class PersonDto(override val id: String, override val name: String) : SubjectDto
+class CompanyDto(override val id: String, override val name: String) : SubjectDto

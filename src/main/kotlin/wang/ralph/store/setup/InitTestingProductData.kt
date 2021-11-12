@@ -19,6 +19,8 @@ fun initTestingProductData() {
     SchemaUtils.create(Products)
     SchemaUtils.create(Skus)
     SchemaUtils.create(SkuImages)
+    SchemaUtils.create(ProductTags)
+    ProductTags.deleteAll()
     SkuImages.deleteAll()
     Skus.deleteAll()
     Products.deleteAll()
@@ -66,5 +68,17 @@ fun initTestingProductData() {
     skuImageB21 = SkuImage.new {
         imageUri = "/uriB21"
         sku = skuB2
+    }
+    ProductTag.new {
+        product = productA
+        tag = "tag1"
+    }
+    ProductTag.new {
+        product = productA
+        tag = "tag2"
+    }
+    ProductTag.new {
+        product = productB
+        tag = "tag1"
     }
 }
