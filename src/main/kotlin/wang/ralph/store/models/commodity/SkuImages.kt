@@ -1,4 +1,4 @@
-package wang.ralph.store.models.product
+package wang.ralph.store.models.commodity
 
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass

@@ -13,10 +13,7 @@ import wang.ralph.store.plugins.configureMonitoring
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSecurity
 import wang.ralph.store.plugins.configureSerialization
-import wang.ralph.store.setup.initTestingCartData
-import wang.ralph.store.setup.initTestingProductData
-import wang.ralph.store.setup.initTestingTagData
-import wang.ralph.store.setup.initTestingUserData
+import wang.ralph.store.setup.*
 
 fun initDB() {
     val url = "jdbc:mysql://dev:dev@localhost:3306/store?useUnicode=true&serverTimezone=UTC"
@@ -30,7 +27,9 @@ fun main() {
         initTestingUserData()
         initTestingCartData()
         initTestingTagData()
-        initTestingProductData()
+        initTestingCommodityData()
+        initTestingPriceData()
+        initTestingCommodityCategoryData()
     }
     embeddedServer(Netty, port = 28081, watchPaths = listOf("classes")) {
         configureGraphQL(

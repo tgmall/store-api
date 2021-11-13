@@ -1,8 +1,8 @@
 package wang.ralph.store.models.price
 
 import org.jetbrains.exposed.sql.transactions.transaction
+import wang.ralph.store.setup.initTestingCommodityData
 import wang.ralph.store.setup.initTestingPriceData
-import wang.ralph.store.setup.initTestingProductData
 import wang.ralph.store.setup.setupTestingDb
 import wang.ralph.store.setup.skuA1
 import java.math.BigDecimal
@@ -16,7 +16,7 @@ internal class PriceTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingProductData()
+            initTestingCommodityData()
             initTestingPriceData()
         }
     }

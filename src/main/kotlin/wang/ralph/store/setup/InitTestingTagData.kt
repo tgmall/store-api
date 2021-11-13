@@ -14,8 +14,8 @@ fun initTestingTagData() {
     SchemaUtils.create(Tags)
     Tags.deleteAll()
 
-    tag1 = Tag.newProductTag("tag1")
-    tag2 = Tag.newProductTag("tag2")
-    tag3 = Tag.newProductTag("tag3")
-    tag4 = Tag.newProductTag("tag4")
+    tag1 = Tag.newCommodityTag("tag1")
+    tag2 = Tag.newCommodityTag("tag2")
+    tag3 = Tag.newCommodityTag("tag3")
+    tag4 = Tag.newCommodityTag("tag4")
 }

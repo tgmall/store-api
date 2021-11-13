@@ -1,6 +1,6 @@
-package wang.ralph.store.application.dtos.product
+package wang.ralph.store.application.dtos.commodity
 
-import wang.ralph.store.models.product.Sku
+import wang.ralph.store.models.commodity.Sku
 
 fun Sku.toDto(): SkuDto =
     SkuDto(id.toString(), name, description, images.map { it.toDto() })

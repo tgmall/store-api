@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import java.util.*
 
 enum class TagType {
-    ProductTag,
+    CommodityTag,
     PersonTag,
 }
 
@@ -18,8 +18,8 @@ object Tags : UUIDTable("tag") {
 
 class Tag(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Tag>(Tags) {
-        fun newProductTag(tag: String) = new {
-            this.type = TagType.ProductTag
+        fun newCommodityTag(tag: String) = new {
+            this.type = TagType.CommodityTag
             this.name = tag
         }
 

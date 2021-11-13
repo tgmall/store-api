@@ -2,40 +2,40 @@ package wang.ralph.store.setup
 
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.deleteAll
-import wang.ralph.store.models.product.*
+import wang.ralph.store.models.commodity.*
 
-lateinit var productA: Product
+lateinit var commodityA: Commodity
 lateinit var skuA1: Sku
 lateinit var skuA2: Sku
 lateinit var skuImageA11: SkuImage
 lateinit var skuImageA12: SkuImage
-lateinit var productB: Product
+lateinit var commodityB: Commodity
 lateinit var skuB1: Sku
 lateinit var skuB2: Sku
 lateinit var skuImageB11: SkuImage
 lateinit var skuImageB21: SkuImage
 
-fun initTestingProductData() {
-    SchemaUtils.create(Products)
+fun initTestingCommodityData() {
+    SchemaUtils.create(Commodities)
     SchemaUtils.create(Skus)
     SchemaUtils.create(SkuImages)
-    SchemaUtils.create(ProductTags)
-    ProductTags.deleteAll()
+    SchemaUtils.create(CommodityTags)
+    CommodityTags.deleteAll()
     SkuImages.deleteAll()
     Skus.deleteAll()
-    Products.deleteAll()
+    Commodities.deleteAll()
 
-    productA = Product.new {
-        name = "productA"
-        description = "productA description"
+    commodityA = Commodity.new {
+        name = "commodityA"
+        description = "commodityA description"
     }
     skuA1 = Sku.new {
-        product = productA
+        commodity = commodityA
         name = "blueA"
         description = "blueA description"
     }
     skuA2 = Sku.new {
-        product = productA
+        commodity = commodityA
         name = "greenA"
         description = "greenA description"
     }
@@ -47,17 +47,17 @@ fun initTestingProductData() {
         imageUri = "/uriA12"
         sku = skuA1
     }
-    productB = Product.new {
-        name = "productB"
-        description = "productB description"
+    commodityB = Commodity.new {
+        name = "commodityB"
+        description = "commodityB description"
     }
     skuB1 = Sku.new {
         name = "blueB"
         description = "blueB description"
-        product = productB
+        commodity = commodityB
     }
     skuB2 = Sku.new {
-        product = productB
+        commodity = commodityB
         name = "greenB"
         description = "greenB description"
     }
@@ -69,16 +69,16 @@ fun initTestingProductData() {
         imageUri = "/uriB21"
         sku = skuB2
     }
-    ProductTag.new {
-        product = productA
+    CommodityTag.new {
+        commodity = commodityA
         tag = "tag1"
     }
-    ProductTag.new {
-        product = productA
+    CommodityTag.new {
+        commodity = commodityA
         tag = "tag2"
     }
-    ProductTag.new {
-        product = productB
+    CommodityTag.new {
+        commodity = commodityB
         tag = "tag1"
     }
 }
