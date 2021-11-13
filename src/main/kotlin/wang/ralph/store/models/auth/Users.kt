@@ -5,9 +5,6 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
-import wang.ralph.store.application.dtos.auth.ChangePasswordInput
-import wang.ralph.store.application.dtos.auth.UserCreateInput
-import wang.ralph.store.application.dtos.auth.UserUpdateInput
 import java.util.*
 import javax.security.auth.login.CredentialNotFoundException
 
@@ -16,7 +13,7 @@ object Users : UUIDTable("user") {
     val username = varchar("name", length = 64)
     val encodedPassword = varchar("password", length = 128)
     val nickName = varchar("nick_name", length = 32)
-    val avatarUrl = varchar("avatar_url", length = 128)
+    val avatarUrl = varchar("avatar_url", length = 128).nullable()
 }
 
 class User(id: EntityID<UUID>) : UUIDEntity(id) {
@@ -32,38 +29,15 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
             }
         }
 
-        fun create(userInput: UserCreateInput): User {
-            val subject = Subject.newPerson(userInput.nickName)
+        fun create(username: String, password: String, nickName: String, avatarUrl: String? = null): User {
+            val subject = Subject.newPerson(nickName)
             return User.new {
-                subjectId = subject.id.value
-                username = userInput.username
-                encodedPassword = encodePassword(userInput.password)
-                nickName = userInput.nickName
-                avatarUrl = userInput.avatarUrl
+                this.subjectId = subject.id.value
+                this.username = username
+                this.encodedPassword = encodePassword(password)
+                this.nickName = nickName
+                this.avatarUrl = avatarUrl
             }
-        }
-
-        fun update(user: User, input: UserUpdateInput) {
-            input.nickName?.let { user.nickName = it }
-            input.avatarUrl?.let { user.avatarUrl = it }
-            user.flush()
-        }
-
-        fun changePassword(user: User, input: ChangePasswordInput) {
-            if (verifyPassword(input.oldPassword, user.encodedPassword)) {
-                user.encodedPassword = encodePassword(input.newPassword)
-                user.flush()
-            } else {
-                throw CredentialNotFoundException()
-            }
-        }
-
-        fun encodePassword(password: String): String {
-            return BCrypt.withDefaults().hashToString(6, password.toCharArray())
-        }
-
-        fun verifyPassword(password: String, encodedPassword: String): Boolean {
-            return BCrypt.verifyer().verify(password.toCharArray(), encodedPassword.toCharArray()).verified
         }
     }
 
@@ -71,7 +45,28 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
     var username: String by Users.username
     var encodedPassword: String by Users.encodedPassword
     var nickName: String by Users.nickName
-    var avatarUrl: String by Users.avatarUrl
+    var avatarUrl: String? by Users.avatarUrl
 
+    fun update(nickName: String? = null, avatarUrl: String? = null) {
+        nickName?.let { this.nickName = it }
+        avatarUrl?.let { this.avatarUrl = it }
+        flush()
+    }
+
+    fun changePassword(oldPassword: String, newPassword: String) {
+        if (verifyPassword(oldPassword, encodedPassword)) {
+            this.encodedPassword = encodePassword(newPassword)
+            flush()
+        } else {
+            throw CredentialNotFoundException()
+        }
+    }
 }
 
+private fun encodePassword(password: String): String {
+    return BCrypt.withDefaults().hashToString(6, password.toCharArray())
+}
+
+private fun verifyPassword(password: String, encodedPassword: String): Boolean {
+    return BCrypt.verifyer().verify(password.toCharArray(), encodedPassword.toCharArray()).verified
+}

@@ -15,7 +15,12 @@ import wang.ralph.store.plugins.subject
 
 class UserMutation {
     fun createUser(input: UserCreateInput): UserDto = transaction {
-        val user = User.create(input)
+        val user = User.create(
+            username = input.username,
+            password = input.password,
+            nickName = input.nickName,
+            avatarUrl = input.avatarUrl,
+        )
         user.toDto()
     }
 
@@ -25,14 +30,14 @@ class UserMutation {
             throw ForbiddenException()
         }
         val user = User.findById(subject.userId) ?: throw UserNotFoundException(subject.userId)
-        User.update(user, input)
+        user.update(nickName = input.nickName, avatarUrl = input.avatarUrl)
         User[subject.subjectId].toDto()
     }
 
     fun changePassword(dfe: DataFetchingEnvironment, input: ChangePasswordInput) = transaction {
         val subject = dfe.call.subject()
         val user = User.findById(subject.userId) ?: throw UserNotFoundException(subject.userId)
-        User.changePassword(user, input)
+        user.changePassword(input.oldPassword, input.newPassword)
         User[subject.subjectId].toDto()
     }
 }

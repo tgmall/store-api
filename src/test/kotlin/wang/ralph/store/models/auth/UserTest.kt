@@ -1,8 +1,6 @@
 package wang.ralph.store.models.auth
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.application.dtos.auth.UserCreateInput
-import wang.ralph.store.application.dtos.auth.UserUpdateInput
 import wang.ralph.store.setup.initTestingUserData
 import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.BeforeTest
@@ -32,13 +30,13 @@ internal class UserTest {
         assertEquals("user1", user.username)
     }
 
-    private fun createTestUser() = User.create(UserCreateInput(username = "user1", password = "123"))
+    private fun createTestUser() = User.create(username = "user1", password = "123", nickName = "User1")
 
     @Test
     fun update() = transaction {
         val user = createTestUser()
 
-        User.update(user, UserUpdateInput(id = user.id.value, nickName = "nickName2"))
+        user.update(nickName = "nickName2")
         assertEquals("nickName2", User[user.id.value].nickName)
     }
 }

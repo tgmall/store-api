@@ -3,7 +3,8 @@ package wang.ralph.store.application.dtos
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import wang.ralph.store.models.auth.User
 
-fun User.toDto(): UserDto = UserDto(id.toString(), username, nickName, avatarUrl)
+private val defaultImageUri = "/default-avatar.svg"
+fun User.toDto(): UserDto = UserDto(id.toString(), username, nickName, avatarUrl ?: defaultImageUri)
 
 @GraphQLDescription("用户")
 data class UserDto(
