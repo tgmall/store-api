@@ -33,6 +33,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
     implementation("wang.ralph.common:ktor-graphql:2.3.0-SNAPSHOT")
     implementation("com.expediagroup:graphql-kotlin-schema-generator:5.2.0")
     runtimeOnly("mysql:mysql-connector-java:$mysql_version")
