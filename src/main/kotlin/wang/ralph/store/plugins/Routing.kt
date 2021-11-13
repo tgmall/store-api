@@ -9,7 +9,7 @@ import io.ktor.routing.*
 import wang.ralph.graphql.graphql
 import wang.ralph.graphql.graphqlPlayground
 import wang.ralph.graphql.graphqlSchema
-import wang.ralph.store.common.DomainNotFoundException
+import wang.ralph.store.application.exceptions.DomainNotFoundException
 import javax.security.auth.login.CredentialNotFoundException
 
 fun Application.configureRouting() {

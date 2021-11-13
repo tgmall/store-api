@@ -3,7 +3,7 @@ package wang.ralph.store.plugins
 import io.ktor.application.*
 import io.ktor.auth.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.auth.models.User
+import wang.ralph.store.models.auth.User
 import java.util.*
 import javax.security.auth.login.CredentialNotFoundException
 

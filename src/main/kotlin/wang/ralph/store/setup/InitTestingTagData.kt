@@ -2,8 +2,8 @@ package wang.ralph.store.setup
 
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.deleteAll
-import wang.ralph.store.tag.models.Tag
-import wang.ralph.store.tag.models.Tags
+import wang.ralph.store.models.tag.Tag
+import wang.ralph.store.models.tag.Tags
 
 lateinit var tag1: Tag
 lateinit var tag2: Tag

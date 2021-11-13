@@ -5,10 +5,10 @@ import io.ktor.server.netty.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.configureGraphQL
-import wang.ralph.store.auth.graphql.UserMutation
-import wang.ralph.store.auth.graphql.UserQuery
-import wang.ralph.store.cart.graphql.CartMutation
-import wang.ralph.store.cart.graphql.CartQuery
+import wang.ralph.store.application.CartMutation
+import wang.ralph.store.application.CartQuery
+import wang.ralph.store.application.UserMutation
+import wang.ralph.store.application.UserQuery
 import wang.ralph.store.plugins.configureMonitoring
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSecurity
@@ -29,8 +29,8 @@ fun main() {
     transaction {
         initTestingUserData()
         initTestingCartData()
-        initTestingProductData()
         initTestingTagData()
+        initTestingProductData()
     }
     embeddedServer(Netty, port = 28081, watchPaths = listOf("classes")) {
         configureGraphQL(

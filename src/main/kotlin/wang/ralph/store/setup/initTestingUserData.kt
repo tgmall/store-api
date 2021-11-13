@@ -2,10 +2,10 @@ package wang.ralph.store.setup
 
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.deleteAll
-import wang.ralph.store.auth.models.Subjects
-import wang.ralph.store.auth.models.User
-import wang.ralph.store.auth.models.UserCreateInput
-import wang.ralph.store.auth.models.Users
+import wang.ralph.store.application.dtos.auth.UserCreateInput
+import wang.ralph.store.models.auth.Subjects
+import wang.ralph.store.models.auth.User
+import wang.ralph.store.models.auth.Users
 
 lateinit var testingUser: User;
 fun initTestingUserData() {

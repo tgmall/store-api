@@ -8,8 +8,8 @@ import io.ktor.util.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.GraphQLRequest
 import wang.ralph.graphql.configureGraphQL
-import wang.ralph.store.auth.graphql.UserQuery
-import wang.ralph.store.auth.models.User
+import wang.ralph.store.application.UserQuery
+import wang.ralph.store.models.auth.User
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSerialization
 import wang.ralph.store.plugins.toPrincipal

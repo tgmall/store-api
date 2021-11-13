@@ -2,7 +2,7 @@ package wang.ralph.store.setup
 
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.deleteAll
-import wang.ralph.store.product.models.*
+import wang.ralph.store.models.product.*
 
 lateinit var productA: Product
 lateinit var skuA1: Sku
