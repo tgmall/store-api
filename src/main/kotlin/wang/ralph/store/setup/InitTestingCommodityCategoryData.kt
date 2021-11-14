@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.deleteAll
 import wang.ralph.store.models.portal.CommodityCategories
 import wang.ralph.store.models.portal.CommodityCategory
+import wang.ralph.store.models.portal.CommodityCategoryTag
 import wang.ralph.store.models.portal.CommodityCategoryTags
 
 lateinit var commodityCategoryRoot: CommodityCategory
@@ -51,5 +52,18 @@ fun initTestingCommodityCategoryData() {
     commodityCategoryB2 = CommodityCategory.new {
         parent = commodityCategoryB
         name = "B2"
+    }
+
+    CommodityCategoryTag.new {
+        category = commodityCategoryA
+        tag = "tag1"
+    }
+    CommodityCategoryTag.new {
+        category = commodityCategoryA1
+        tag = "tag2"
+    }
+    CommodityCategoryTag.new {
+        category = commodityCategoryA11
+        tag = "tag3"
     }
 }
