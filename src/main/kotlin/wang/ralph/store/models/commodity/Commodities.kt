@@ -15,10 +15,11 @@ object Commodities : UUIDTable("commodity") {
 class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Commodity>(Commodities) {
         fun findByTags(vararg tags: String): SizedIterable<Commodity> {
+            val tagList = tags.distinct().toList()
             return find {
                 exists(
                     CommodityTags.select {
-                        (CommodityTags.commodity eq Commodities.id) and (CommodityTags.tag inList tags.toList())
+                        (CommodityTags.commodity eq Commodities.id) and (CommodityTags.tag inList tagList)
                     }
                 )
             }
