@@ -1,3 +1,3 @@
 package wang.ralph.store.application.exceptions
 
-open class ForbiddenException(message: String? = null) : RuntimeException(message)
+open class ForbiddenException : DomainException()

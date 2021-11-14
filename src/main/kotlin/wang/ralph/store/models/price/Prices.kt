@@ -18,7 +18,7 @@ object Prices : UUIDTable("price") {
 
 class Price(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Price>(Prices) {
-        fun findPrice(skuId: UUID, now: Instant): Price? {
+        fun findPrice(skuId: UUID, now: Instant = Instant.now()): Price? {
             return find {
                 (Prices.skuId eq skuId) and
                         (Prices.validFrom lessEq now) and (Prices.validTo greater now)
