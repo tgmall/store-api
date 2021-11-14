@@ -13,8 +13,6 @@ import wang.ralph.store.models.auth.User
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSerialization
 import wang.ralph.store.plugins.toPrincipal
-import wang.ralph.store.setup.initTestingCartData
-import wang.ralph.store.setup.initTestingCommodityData
 import wang.ralph.store.setup.initTestingUserData
 import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.Test
@@ -29,8 +27,6 @@ class ApplicationTest {
         setupTestingDb()
         transaction {
             initTestingUserData()
-            initTestingCartData()
-            initTestingCommodityData()
         }
         withTestApplication({
             authentication {

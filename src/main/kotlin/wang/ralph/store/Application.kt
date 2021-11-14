@@ -2,7 +2,6 @@ package wang.ralph.store
 
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.configureGraphQL
 import wang.ralph.store.application.CartMutation
@@ -15,14 +14,8 @@ import wang.ralph.store.plugins.configureSecurity
 import wang.ralph.store.plugins.configureSerialization
 import wang.ralph.store.setup.*
 
-fun initDB() {
-    val url = "jdbc:mysql://dev:dev@localhost:3306/store?useUnicode=true&serverTimezone=UTC"
-    val driver = "com.mysql.cj.jdbc.Driver"
-    Database.connect(url, driver)
-}
-
 fun main() {
-    initDB()
+    setupDb()
     transaction {
         initTestingUserData()
         initTestingCartData()
