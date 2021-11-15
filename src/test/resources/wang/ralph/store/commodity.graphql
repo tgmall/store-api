@@ -1,0 +1,17 @@
+query($id: String!) {
+    commodity(id: $id) {
+        id
+        name
+        description
+        skus {
+            id
+            name
+            description
+            images {
+                imageUri
+            }
+            unit
+            price
+        }
+    }
+}

@@ -8,15 +8,19 @@ fun CommodityCategory.toDto(): CommodityCategoryDto =
         name,
         children.map { it.toDto() },
         tags.map { it.toDto() },
-        descentTags.map { it.toDto() },
-        relatedTags.map { it.toDto() },
     )
 
 data class CommodityCategoryDto(
     val id: String,
     val name: String,
-    val children: List<CommodityCategoryDto>,
-    val tags: List<CommodityCategoryTagDto>,
-    val descentTags: List<CommodityCategoryTagDto>,
-    val relatedTags: List<CommodityCategoryTagDto>,
-)
+    val children: List<CommodityCategoryDto> = emptyList(),
+    val tags: List<CommodityCategoryTagDto> = emptyList(),
+) {
+    fun descentTags(): List<CommodityCategoryTagDto> {
+        return children.flatMap { it.tags + it.descentTags() }
+    }
+
+    fun relatedTags(): List<CommodityCategoryTagDto> {
+        return tags + children.flatMap { it.tags + it.descentTags() }
+    }
+}

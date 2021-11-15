@@ -8,21 +8,22 @@ import wang.ralph.store.application.dtos.cart.CartDto
 import wang.ralph.store.application.dtos.cart.toDto
 import wang.ralph.store.models.cart.Cart
 import wang.ralph.store.plugins.subject
+import java.math.BigDecimal
 import java.util.*
 
 @GraphQLDescription("修改购物车")
 class CartMutation {
     @GraphQLDescription("添加购物车条目")
-    fun addCartItem(dfe: DataFetchingEnvironment, skuId: UUID, count: Int): CartDto = transaction {
+    fun addCartItem(dfe: DataFetchingEnvironment, skuId: String, amount: BigDecimal): CartDto = transaction {
         val cart = Cart.ensureCart(dfe.call.subject().subjectId)
-        cart.addItem(skuId, count)
+        cart.addItem(UUID.fromString(skuId), amount)
         cart.toDto()
     }
 
     @GraphQLDescription("减少购物车条目")
-    fun removeCartItem(dfe: DataFetchingEnvironment, skuId: UUID, count: Int): CartDto = transaction {
+    fun removeCartItem(dfe: DataFetchingEnvironment, skuId: String, amount: BigDecimal): CartDto = transaction {
         val cart = Cart.ensureCart(dfe.call.subject().subjectId)
-        cart.removeItem(skuId, count)
+        cart.removeItem(UUID.fromString(skuId), amount)
         cart.toDto()
     }
 

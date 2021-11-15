@@ -1,6 +1,7 @@
 package wang.ralph.store.models.portal
 
 import org.jetbrains.exposed.sql.transactions.transaction
+import wang.ralph.store.application.dtos.portal.toDto
 import wang.ralph.store.setup.commodityCategoryA
 import wang.ralph.store.setup.initTestingCommodityCategoryData
 import wang.ralph.store.setup.initTestingCommodityData
@@ -21,11 +22,11 @@ internal class CommodityCategoryTest {
 
     @Test
     fun getDescentTags() = transaction {
-        assertEquals(listOf("tag2", "tag3"), commodityCategoryA.descentTags.map { it.tag })
+        assertEquals(listOf("tag2", "tag3"), commodityCategoryA.toDto().descentTags().map { it.tag })
     }
 
     @Test
     fun getRelatedTags() = transaction {
-        assertEquals(listOf("tag1", "tag2", "tag3"), commodityCategoryA.relatedTags.map { it.tag })
+        assertEquals(listOf("tag1", "tag2", "tag3"), commodityCategoryA.toDto().relatedTags().map { it.tag })
     }
 }

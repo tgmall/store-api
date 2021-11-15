@@ -40,6 +40,8 @@ dependencies {
     testImplementation("com.h2database:h2:$h2_version")
 
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("io.ktor:ktor-client-json:$ktor_version")
+    testImplementation("io.ktor:ktor-client-jackson:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
 }
 

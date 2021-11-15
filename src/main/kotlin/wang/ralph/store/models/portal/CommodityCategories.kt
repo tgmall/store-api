@@ -23,10 +23,4 @@ class CommodityCategory(id: EntityID<UUID>) : UUIDEntity(id) {
     var parent by CommodityCategory optionalReferencedOn CommodityCategories.parent
     val children by CommodityCategory optionalReferrersOn CommodityCategories.parent
     val tags by CommodityCategoryTag referrersOn CommodityCategoryTags.category
-
-    val descentTags: List<CommodityCategoryTag>
-        get() = children.flatMap { it.tags + it.descentTags }
-
-    val relatedTags: List<CommodityCategoryTag>
-        get() = tags + descentTags
 }

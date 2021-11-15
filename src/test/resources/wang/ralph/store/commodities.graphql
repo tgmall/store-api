@@ -1,0 +1,17 @@
+query($tags: [String!]!) {
+    commodities(tags: $tags) {
+        id
+        name
+        description
+        skus {
+            id
+            name
+            description
+            images {
+                imageUri
+            }
+            unit
+            price
+        }
+    }
+}

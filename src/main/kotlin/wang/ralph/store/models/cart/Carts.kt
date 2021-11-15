@@ -4,8 +4,8 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
+import java.math.BigDecimal
 import java.util.*
-import kotlin.math.max
 
 object Carts : UUIDTable("cart") {
     val subjectId = uuid("subject_id")
@@ -21,22 +21,22 @@ class Cart(id: EntityID<UUID>) : UUIDEntity(id) {
     var subjectId: UUID by Carts.subjectId
     val items by CartItem referrersOn CartItems.cart
 
-    fun addItem(skuId: UUID, amount: Int) {
+    fun addItem(skuId: UUID, amount: BigDecimal) {
         val item = items.firstOrNull { it.skuId == skuId }
-        val realAmount = max(0, (item?.amount ?: 0) + amount)
         if (item == null) {
-            CartItem.create(this, skuId, realAmount)
+            CartItem.create(this, skuId, maxOf(amount, BigDecimal.ZERO))
         } else {
+            val realAmount = maxOf(item.amount + amount, BigDecimal.ZERO)
             item.amount = realAmount
             item.flush()
         }
     }
 
-    fun removeItem(skuId: UUID, amount: Int) {
+    fun removeItem(skuId: UUID, amount: BigDecimal) {
         addItem(skuId, -amount)
     }
 
     fun purge() {
-        items.filter { it.amount <= 0 }.forEach { it.delete() }
+        items.filter { it.amount <= BigDecimal.ZERO }.forEach { it.delete() }
     }
 }

@@ -10,7 +10,7 @@ import wang.ralph.store.plugins.subject
 import javax.security.auth.login.CredentialNotFoundException
 
 class UserQuery {
-    fun user(dfe: DataFetchingEnvironment): UserDto = transaction {
+    fun currentUser(dfe: DataFetchingEnvironment): UserDto = transaction {
         User[dfe.call.subject().userId].toDto()
     }
 
