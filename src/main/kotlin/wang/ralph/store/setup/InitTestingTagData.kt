@@ -1,7 +1,6 @@
 package wang.ralph.store.setup
 
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.deleteAll
 import wang.ralph.store.models.tag.Tag
 import wang.ralph.store.models.tag.Tags
 
@@ -11,8 +10,8 @@ lateinit var tag3: Tag
 lateinit var tag4: Tag
 
 fun initTestingTagData() {
+    SchemaUtils.drop(Tags)
     SchemaUtils.create(Tags)
-    Tags.deleteAll()
 
     tag1 = Tag.newCommodityTag("tag1")
     tag2 = Tag.newCommodityTag("tag2")
