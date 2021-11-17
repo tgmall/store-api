@@ -15,21 +15,21 @@ import java.util.*
 class CartMutation {
     @GraphQLDescription("添加购物车条目")
     fun addCartItem(dfe: DataFetchingEnvironment, skuId: String, skuAmount: BigDecimal): CartDto = transaction {
-        val cart = Cart.ensureCart(dfe.call.subject().subjectId)
+        val cart = Cart.ensureCart(dfe.call.subject().userId)
         cart.addItem(UUID.fromString(skuId), skuAmount)
         cart.toDto()
     }
 
     @GraphQLDescription("减少购物车条目")
     fun removeCartItem(dfe: DataFetchingEnvironment, skuId: String, skuAmount: BigDecimal): CartDto = transaction {
-        val cart = Cart.ensureCart(dfe.call.subject().subjectId)
+        val cart = Cart.ensureCart(dfe.call.subject().userId)
         cart.removeItem(UUID.fromString(skuId), skuAmount)
         cart.toDto()
     }
 
     @GraphQLDescription("清理购物车，移除已经减为零的")
     fun purgeCart(dfe: DataFetchingEnvironment): CartDto = transaction {
-        val cart = Cart.ensureCart(dfe.call.subject().subjectId)
+        val cart = Cart.ensureCart(dfe.call.subject().userId)
         cart.purge()
         cart.toDto()
     }

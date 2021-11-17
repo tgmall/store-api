@@ -24,13 +24,13 @@ internal class CartTest {
 
     @Test
     fun getItems() = transaction {
-        val cart = Cart.ensureCart(testingUser.subjectId)
+        val cart = Cart.ensureCart(testingUser.id.value)
         assertEquals(emptyList(), cart.items.toList())
     }
 
     @Test
     fun addItem() = transaction {
-        val cart = Cart.ensureCart(testingUser.subjectId)
+        val cart = Cart.ensureCart(testingUser.id.value)
         val skuId = UUID.randomUUID()
         cart.addItem(skuId, BigDecimal("10.00"))
         assertEquals(listOf(BigDecimal("10.00")), cart.items.map { it.skuAmount })
@@ -38,7 +38,7 @@ internal class CartTest {
 
     @Test
     fun removeItem() = transaction {
-        val cart = Cart.ensureCart(testingUser.subjectId)
+        val cart = Cart.ensureCart(testingUser.id.value)
         val skuId = UUID.randomUUID()
         cart.removeItem(skuId, BigDecimal("10.00"))
         assertEquals(listOf(BigDecimal("0.00")), cart.items.map { it.skuAmount })
@@ -49,7 +49,7 @@ internal class CartTest {
 
     @Test
     fun purge() = transaction {
-        val cart = Cart.ensureCart(testingUser.subjectId)
+        val cart = Cart.ensureCart(testingUser.id.value)
         val skuId = UUID.randomUUID()
         cart.addItem(skuId, BigDecimal("10.00"))
         cart.removeItem(skuId, BigDecimal("10.00"))

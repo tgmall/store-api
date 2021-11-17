@@ -9,20 +9,20 @@ import java.math.BigDecimal
 import java.util.*
 
 object Carts : UUIDTable("cart") {
-    val subjectId = uuid("subject_id")
+    val userId = uuid("user_id")
 }
 
 @GraphQLDescription("购物车")
 class Cart(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Cart>(Carts) {
         @GraphQLDescription("新建或取得现有购物车")
-        fun ensureCart(ownerId: UUID) = Cart.find { Carts.subjectId eq ownerId }.firstOrNull() ?: Cart.new {
-            subjectId = ownerId
+        fun ensureCart(userId: UUID) = Cart.find { Carts.userId eq userId }.firstOrNull() ?: Cart.new {
+            this.userId = userId
         }
     }
 
-    @GraphQLDescription("所属主体的 ID")
-    var subjectId: UUID by Carts.subjectId
+    @GraphQLDescription("所属用户的 ID")
+    var userId: UUID by Carts.userId
 
     @GraphQLDescription("购物车中的条目")
     val items by CartItem referrersOn CartItems.cart
