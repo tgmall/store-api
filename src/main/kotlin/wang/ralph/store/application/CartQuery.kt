@@ -10,8 +10,8 @@ import wang.ralph.store.plugins.subject
 
 class CartQuery {
     fun cart(dfe: DataFetchingEnvironment): CartDto = transaction {
-        val ownerId = dfe.call.subject().subjectId
-        val cart = Cart.ensureCart(ownerId)
+        val userId = dfe.call.subject().userId
+        val cart = Cart.ensureCart(userId)
         cart.toDto()
     }
 }

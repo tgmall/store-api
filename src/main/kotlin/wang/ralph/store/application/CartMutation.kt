@@ -14,16 +14,16 @@ import java.util.*
 @GraphQLDescription("修改购物车")
 class CartMutation {
     @GraphQLDescription("添加购物车条目")
-    fun addCartItem(dfe: DataFetchingEnvironment, skuId: String, amount: BigDecimal): CartDto = transaction {
+    fun addCartItem(dfe: DataFetchingEnvironment, skuId: String, skuAmount: BigDecimal): CartDto = transaction {
         val cart = Cart.ensureCart(dfe.call.subject().subjectId)
-        cart.addItem(UUID.fromString(skuId), amount)
+        cart.addItem(UUID.fromString(skuId), skuAmount)
         cart.toDto()
     }
 
     @GraphQLDescription("减少购物车条目")
-    fun removeCartItem(dfe: DataFetchingEnvironment, skuId: String, amount: BigDecimal): CartDto = transaction {
+    fun removeCartItem(dfe: DataFetchingEnvironment, skuId: String, skuAmount: BigDecimal): CartDto = transaction {
         val cart = Cart.ensureCart(dfe.call.subject().subjectId)
-        cart.removeItem(UUID.fromString(skuId), amount)
+        cart.removeItem(UUID.fromString(skuId), skuAmount)
         cart.toDto()
     }
 

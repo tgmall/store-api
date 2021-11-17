@@ -1,5 +1,6 @@
 package wang.ralph.store.models.cart
 
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -10,22 +11,28 @@ import java.util.*
 object CartItems : UUIDTable("cart_item") {
     val cart = reference("cart_id", Carts)
     val skuId = uuid("sku_id")
-    val amount = decimal("amount", 10, 2).default(BigDecimal.ZERO)
+    val skuAmount = decimal("sku_amount", 10, 2).default(BigDecimal.ZERO)
 }
 
+@GraphQLDescription("购物车条目")
 class CartItem(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<CartItem>(CartItems) {
-        fun create(cart: Cart, skuId: UUID, amount: BigDecimal): CartItem {
+        @GraphQLDescription("创建条目")
+        fun create(cart: Cart, skuId: UUID, skuAmount: BigDecimal): CartItem {
             return CartItem.new {
                 this.cart = cart
                 this.skuId = skuId
-                this.amount = amount
+                this.skuAmount = skuAmount
             }
         }
     }
 
+    @GraphQLDescription("所属购物车")
     var cart by Cart referencedOn CartItems.cart
-    var skuId: UUID by CartItems.skuId
-    var amount: BigDecimal by CartItems.amount
 
+    @GraphQLDescription("SKU 的 ID")
+    var skuId: UUID by CartItems.skuId
+
+    @GraphQLDescription("SKU 的数量")
+    var skuAmount: BigDecimal by CartItems.skuAmount
 }

@@ -1,6 +1,7 @@
 package wang.ralph.store.models.auth
 
 import at.favre.lib.crypto.bcrypt.BCrypt
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -16,8 +17,10 @@ object Users : UUIDTable("user") {
     val avatarUrl = varchar("avatar_url", length = 128).nullable()
 }
 
+@GraphQLDescription("用户")
 class User(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<User>(Users) {
+        @GraphQLDescription("认证")
         fun authenticate(username: String, password: String): User? {
             val user = find { Users.username eq username }.firstOrNull()
             return user?.let {
@@ -29,6 +32,7 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
             }
         }
 
+        @GraphQLDescription("创建/注册")
         fun create(username: String, password: String, nickName: String, avatarUrl: String? = null): User {
             val subject = Subject.newPerson(nickName)
             return User.new {
@@ -41,18 +45,29 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
         }
     }
 
+    @GraphQLDescription("所属主体的 id")
     var subjectId: UUID by Users.subjectId
+
+    @GraphQLDescription("用户名")
     var username: String by Users.username
+
+    @GraphQLDescription("加密过的密码")
     var encodedPassword: String by Users.encodedPassword
+
+    @GraphQLDescription("昵称")
     var nickName: String by Users.nickName
+
+    @GraphQLDescription("头像 url")
     var avatarUrl: String? by Users.avatarUrl
 
+    @GraphQLDescription("修改个人信息")
     fun update(nickName: String? = null, avatarUrl: String? = null) {
         nickName?.let { this.nickName = it }
         avatarUrl?.let { this.avatarUrl = it }
         flush()
     }
 
+    @GraphQLDescription("修改密码")
     fun changePassword(oldPassword: String, newPassword: String) {
         if (verifyPassword(oldPassword, encodedPassword)) {
             this.encodedPassword = encodePassword(newPassword)

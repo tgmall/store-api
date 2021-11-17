@@ -74,7 +74,7 @@ class ApplicationTest {
         assertEquals(listOf("blueA", "greenA"), commodity.skus.map { it.name })
         // 加入购物车
         val cart = gql.addCartItem(commodity.skus.first().id)
-        assertEquals(listOf(BigDecimal("1.00")), cart.items.map { it.amount })
+        assertEquals(listOf(BigDecimal("1.00")), cart.items.map { it.skuAmount })
         assertEquals(BigDecimal("100.0100"), cart.total())
         // 去结算
         // 选择促销项

@@ -30,8 +30,8 @@ class GqlUtils(val port: Int) {
         this.password = password
     }
 
-    fun addCartItem(skuId: String, amount: BigDecimal = BigDecimal.ONE): CartDto {
-        return execute(loadResource("addCartItem"), mapOf("skuId" to skuId, "amount" to amount))
+    fun addCartItem(skuId: String, skuAmount: BigDecimal = BigDecimal.ONE): CartDto {
+        return execute(loadResource("addCartItem"), mapOf("skuId" to skuId, "skuAmount" to skuAmount))
     }
 
     fun listCommodities(tags: List<String>): List<CommodityDto> {

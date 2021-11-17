@@ -1,9 +1,9 @@
-mutation($skuId: String!, $amount: BigDecimal!) {
-    addCartItem(skuId: $skuId, amount: $amount) {
+mutation($skuId: String!, $skuAmount: BigDecimal!) {
+    addCartItem(skuId: $skuId, skuAmount: $skuAmount) {
         id
         items {
             skuId
-            amount
+            skuAmount
         }
     }
 }

@@ -33,7 +33,7 @@ internal class CartTest {
         val cart = Cart.ensureCart(testingUser.subjectId)
         val skuId = UUID.randomUUID()
         cart.addItem(skuId, BigDecimal("10.00"))
-        assertEquals(listOf(BigDecimal("10.00")), cart.items.map { it.amount })
+        assertEquals(listOf(BigDecimal("10.00")), cart.items.map { it.skuAmount })
     }
 
     @Test
@@ -41,10 +41,10 @@ internal class CartTest {
         val cart = Cart.ensureCart(testingUser.subjectId)
         val skuId = UUID.randomUUID()
         cart.removeItem(skuId, BigDecimal("10.00"))
-        assertEquals(listOf(BigDecimal("0.00")), cart.items.map { it.amount })
+        assertEquals(listOf(BigDecimal("0.00")), cart.items.map { it.skuAmount })
         cart.addItem(skuId, BigDecimal("10.00"))
         cart.removeItem(skuId, BigDecimal("5.00"))
-        assertEquals(listOf(BigDecimal("5.00")), cart.items.map { it.amount })
+        assertEquals(listOf(BigDecimal("5.00")), cart.items.map { it.skuAmount })
     }
 
     @Test
@@ -53,7 +53,7 @@ internal class CartTest {
         val skuId = UUID.randomUUID()
         cart.addItem(skuId, BigDecimal("10.00"))
         cart.removeItem(skuId, BigDecimal("10.00"))
-        assertEquals(listOf(BigDecimal("0.00")), cart.items.map { it.amount })
+        assertEquals(listOf(BigDecimal("0.00")), cart.items.map { it.skuAmount })
         cart.purge()
         assertEquals(emptyList(), cart.items.toList())
     }

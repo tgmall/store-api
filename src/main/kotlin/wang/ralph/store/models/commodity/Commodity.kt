@@ -1,5 +1,6 @@
 package wang.ralph.store.models.commodity
 
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -12,8 +13,10 @@ object Commodities : UUIDTable("commodity") {
     val description = text("description")
 }
 
+@GraphQLDescription("商品")
 class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Commodity>(Commodities) {
+        @GraphQLDescription("根据标签查找商品")
         fun findByTags(vararg tags: String): SizedIterable<Commodity> {
             val tagList = tags.distinct().toList()
             return find {
@@ -26,10 +29,19 @@ class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
         }
     }
 
+    @GraphQLDescription("商品名称")
     var name: String by Commodities.name
+
+    @GraphQLDescription("商品描述")
     var description: String by Commodities.description
+
+    @GraphQLDescription("本商品下的所有 SKU 列表")
     val skus by Sku referrersOn Skus.commodity
+
+    @GraphQLDescription("本商品的标签")
     val tags by CommodityTag referrersOn CommodityTags.commodity
+
+    @GraphQLDescription("添加标签")
     fun addTags(vararg tags: String): Commodity {
         val commodity = this
         tags.forEach { tag ->
@@ -41,11 +53,11 @@ class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
         return commodity
     }
 
+    @GraphQLDescription("移除标签")
     fun removeTags(vararg tags: String): Commodity {
         CommodityTags.deleteWhere {
             CommodityTags.tag inList tags.toList()
         }
         return this
     }
-
 }

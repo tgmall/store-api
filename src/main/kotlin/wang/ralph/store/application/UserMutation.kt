@@ -31,13 +31,13 @@ class UserMutation {
         }
         val user = User.findById(subject.userId) ?: throw UserNotFoundException(subject.userId)
         user.update(nickName = input.nickName, avatarUrl = input.avatarUrl)
-        User[subject.subjectId].toDto()
+        User[subject.userId].toDto()
     }
 
     fun changePassword(dfe: DataFetchingEnvironment, input: ChangePasswordInput) = transaction {
         val subject = dfe.call.subject()
         val user = User.findById(subject.userId) ?: throw UserNotFoundException(subject.userId)
         user.changePassword(input.oldPassword, input.newPassword)
-        User[subject.subjectId].toDto()
+        User[subject.userId].toDto()
     }
 }

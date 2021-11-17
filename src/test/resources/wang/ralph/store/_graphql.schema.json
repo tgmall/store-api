@@ -86,7 +86,7 @@
           "description": null,
           "fields": [
             {
-              "name": "amount",
+              "name": "skuAmount",
               "description": null,
               "args": [],
               "type": {
@@ -594,7 +594,7 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "amount",
+                  "name": "skuAmount",
                   "description": null,
                   "type": {
                     "kind": "NON_NULL",
@@ -655,7 +655,7 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "amount",
+                  "name": "skuAmount",
                   "description": null,
                   "type": {
                     "kind": "NON_NULL",

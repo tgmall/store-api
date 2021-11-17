@@ -4,8 +4,8 @@ import wang.ralph.store.models.tag.Tag
 import wang.ralph.store.models.tag.TagType
 
 fun Tag.toDto(): TagDto = when (type) {
-    TagType.CommodityTag -> CommodityTagDto(name)
-    TagType.PersonTag -> PersonTagDto(name)
+    TagType.CommodityTag -> CommodityTagDto(tag)
+    TagType.SubjectTag -> PersonTagDto(tag)
 }
 
 interface TagDto {
