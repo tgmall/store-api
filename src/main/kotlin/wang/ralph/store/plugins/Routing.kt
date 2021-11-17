@@ -18,6 +18,7 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.Unauthorized, "无效的用户名或密码")
             throw it
         }
+        // TODO: 用 GraphQL 的方式处理错误信息
         exception<DomainNotFoundException> {
             call.respond(HttpStatusCode.NotFound, it.message)
             throw it

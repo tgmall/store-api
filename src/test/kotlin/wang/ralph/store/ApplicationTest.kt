@@ -1,22 +1,15 @@
 package wang.ralph.store
 
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.*
-import io.ktor.client.request.*
 import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.graphql.GraphQLResponse
-import wang.ralph.graphql.graphQL
 import wang.ralph.store.application.dtos.UserDto
-import wang.ralph.store.application.dtos.cart.CartDto
-import wang.ralph.store.application.dtos.commodity.CommodityDto
-import wang.ralph.store.application.dtos.portal.CommodityCategoryDto
-import wang.ralph.store.application.dtos.portal.CommodityCategoryTagDto
+import wang.ralph.store.graphql.GqlUtils
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @InternalAPI
 class ApplicationTest {
@@ -25,6 +18,7 @@ class ApplicationTest {
         private var inited = false
     }
 
+    private val gql = GqlUtils(port)
 
     @BeforeTest
     fun setup() {
@@ -39,88 +33,66 @@ class ApplicationTest {
         }
     }
 
-    private val client = HttpClient(CIO) {
-        install(JsonFeature)
-    }
-
     @Test
-    fun testUsers() = runBlocking {
-        val user: UserDto = gql(loadGraphQL("currentUser"))
+    fun currentUser() = runBlocking {
+        gql.loginAs("username", "password")
+        val user: UserDto = gql.getCurrentUser()
         assertEquals("username", user.username)
     }
 
     @Test
-    fun e2e() = runBlocking {
+    fun commodityMaintainE2e() = runBlocking {
+        // 登录
+        // 添加商品名录
+        // 添加二级商品名录
+        // 添加商品
+        // 将多个商品组合成一个新商品
+        // 设置商品标签
+        // 添加 SKU
+        // SKU 定价
+        // 设置初始 SKU 数量
+        // 商品上架
+    }
+
+    @Test
+    fun consumerE2e() = runBlocking {
+        gql.loginAs("username", "password")
         // 注册新用户
-        val user = createUser()
+        val user = gql.createUser("wzc", "wzc")
         assertEquals("wzc", user.username)
+        gql.loginAs("wzc", "wzc")
         // 查看商品名录
-        val categories = listCommodityCategories()
+        val categories = gql.listCommodityCategories()
         assertEquals(listOf("root"), categories.map { it.name })
         // 查看商品列表
-        val commodities = listCommodities(categories.first().relatedTags.map { it.tag })
+        val commodities = gql.listCommodities(categories.first().relatedTags.map { it.tag })
         assertEquals(listOf("commodityA", "commodityB"), commodities.map { it.name })
         // 查看商品详情
-        val commodity = getCommodity(commodities.first().id)
+        val commodity = gql.getCommodity(commodities.first().id)
         assertEquals(BigDecimal("100.01"), commodity.minPrice())
         assertEquals(BigDecimal("200.00"), commodity.maxPrice())
         assertEquals(listOf("blueA", "greenA"), commodity.skus.map { it.name })
         // 加入购物车
-        val cart = addCartItem(commodity.skus.first().id)
+        val cart = gql.addCartItem(commodity.skus.first().id)
         assertEquals(listOf(BigDecimal("1.00")), cart.items.map { it.amount })
         assertEquals(BigDecimal("100.0100"), cart.total())
+        // 去结算
+        // 选择促销项
+        // 填写收件信息
+        // 付款
+        // 确认收货
     }
 
-    private fun addCartItem(skuId: String, amount: BigDecimal = BigDecimal.ONE): CartDto {
-        return gql(loadGraphQL("addCartItem"), mapOf("skuId" to skuId, "amount" to amount))
+    @Test
+    fun shippingE2e() {
+        // 收到订单
+        // 出货
+        // 发货
+        // 更新收货状态
     }
 
-    private fun listCommodities(tags: List<String>): List<CommodityDto> {
-        return gql(loadGraphQL("commodities"), mapOf("tags" to tags))
-    }
-
-    private fun getCommodity(id: String): CommodityDto {
-        return gql(loadGraphQL("commodity"), mapOf("id" to id))
-    }
-
-    private fun listCommodityCategories(): List<CommodityCategoryVo> {
-        return gql(loadGraphQL("commodityCategories"))
-    }
-
-    private fun createUser(): UserDto {
-        return gql(loadGraphQL("createUser"), mapOf(
-            "input" to mapOf(
-                "username" to "wzc",
-                "password" to "password",
-                "nickName" to "WZC",
-                "avatarUrl" to "/wzc.svg"
-            )
-        ))
-    }
-
-    private inline fun <reified T> gql(query: String, variables: Map<String, Any?>? = null): T = runBlocking {
-        val name = query.replace(Regex("""^(query|mutation)[\s\S]*?\{\s*(\w+)[\s\S]*$"""), "$2")
-        val response: GraphQLResponse<Map<String, T>> =
-            client.graphQL("http://localhost:$port/graphql", query.trimIndent(), variables) {
-                val encodeBase64 = "username:password".encodeBase64()
-                header("Authorization", "Basic $encodeBase64")
-            }
-        assertNull(response.errors)
-        assertNull(response.extensions)
-        assertNotNull(response.data)
-        response.data!![name]!!
-    }
-
-    private fun loadGraphQL(filename: String): String {
-        return javaClass.getResourceAsStream("$filename.graphql")!!.reader(Charsets.UTF_8).readText()
+    @Test
+    fun stockE2e() {
+        // 添加 SKU
     }
 }
-
-data class CommodityCategoryVo(
-    val id: String,
-    val name: String,
-    val children: List<CommodityCategoryDto> = emptyList(),
-    val tags: List<CommodityCategoryTagDto> = emptyList(),
-    val descentTags: List<CommodityCategoryTagDto> = emptyList(),
-    val relatedTags: List<CommodityCategoryTagDto> = emptyList(),
-)
