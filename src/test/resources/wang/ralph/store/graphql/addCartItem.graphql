@@ -2,6 +2,7 @@ mutation($skuId: String!, $skuAmount: BigDecimal!) {
     addCartItem(skuId: $skuId, skuAmount: $skuAmount) {
         id
         items {
+            id
             skuId
             skuAmount
         }

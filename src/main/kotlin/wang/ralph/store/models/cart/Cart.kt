@@ -48,4 +48,8 @@ class Cart(id: EntityID<UUID>) : UUIDEntity(id) {
     fun purge() {
         items.filter { it.skuAmount <= BigDecimal.ZERO }.forEach { it.delete() }
     }
+
+    fun itemsById(itemIds: Iterable<UUID>): List<CartItem> {
+        return items.filter { it.id.value in itemIds }
+    }
 }

@@ -11,7 +11,7 @@ import java.util.*
 object Skus : UUIDTable("sku") {
     val commodity = reference("commodity_id", Commodities)
     val name = varchar("name", 32)
-    val description = text("description")
+    val description = text("description").clientDefault { "" }
     val unit = varchar("unit", 32).default("个")
     val price = decimal("price", 10, 2).nullable()
 }
@@ -39,4 +39,3 @@ class Sku(id: EntityID<UUID>) : UUIDEntity(id) {
     @GraphQLDescription("价格")
     var price: BigDecimal? by Skus.price
 }
-

@@ -4,6 +4,7 @@ import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.application.dtos.UserDto
+import wang.ralph.store.application.dtos.cart.CartDto
 import wang.ralph.store.graphql.GqlUtils
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
@@ -73,11 +74,24 @@ class ApplicationTest {
         assertEquals(BigDecimal("200.00"), commodity.maxPrice())
         assertEquals(listOf("blueA", "greenA"), commodity.skus.map { it.name })
         // 加入购物车
-        val cart = gql.addCartItem(commodity.skus.first().id)
+        lateinit var cart: CartDto
+        cart = gql.addCartItem(commodity.skus.first().id)
         assertEquals(listOf(BigDecimal("1.00")), cart.items.map { it.skuAmount })
         assertEquals(BigDecimal("100.0100"), cart.total())
-        // 去结算
-        // 选择促销项
+        // 重复添加
+        cart = gql.addCartItem(commodity.skus.first().id)
+        assertEquals(listOf(BigDecimal("2.00")), cart.items.map { it.skuAmount })
+        assertEquals(BigDecimal("200.0200"), cart.total())
+        // 加另一个
+        cart = gql.addCartItem(commodity.skus.last().id)
+        assertEquals(listOf(BigDecimal("2.00"), BigDecimal("1.00")), cart.items.map { it.skuAmount })
+        assertEquals(BigDecimal("400.0200"), cart.total())
+        // 使用购物车中的商品去结算
+        val purchaseOrder = gql.createPurchaseOrder(cart.items.mapNotNull { it.id })
+        assertEquals(BigDecimal("100.01"), purchaseOrder.items.first().skuSnapshot.price)
+        // 把已加入订单的条目从购物车中删除
+        cart = gql.cart()
+        assertEquals(emptyList(), cart.items.map { it.sku().name })
         // 填写收件信息
         // 付款
         // 确认收货

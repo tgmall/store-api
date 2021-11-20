@@ -19,7 +19,7 @@ enum class TagType {
 object Tags : UUIDTable("tag") {
     val type = enumerationByName("type", 32, TagType::class)
     val tag = varchar("tag", 32)
-    val description = text("description")
+    val description = text("description").clientDefault { "" }
 }
 
 @GraphQLDescription("标签")

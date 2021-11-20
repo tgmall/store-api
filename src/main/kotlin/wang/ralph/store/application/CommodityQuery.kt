@@ -8,7 +8,7 @@ import java.util.*
 
 class CommodityQuery {
     fun commodities(tags: List<String>): List<CommodityDto> = transaction {
-        Commodity.findByTags(*tags.toTypedArray()).map { it.toDto() }
+        Commodity.findByTags(tags).map { it.toDto() }
     }
 
     fun commodity(id: String): CommodityDto = transaction {

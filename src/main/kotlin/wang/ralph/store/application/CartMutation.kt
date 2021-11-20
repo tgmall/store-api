@@ -6,7 +6,12 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.call
 import wang.ralph.store.application.dtos.cart.CartDto
 import wang.ralph.store.application.dtos.cart.toDto
+import wang.ralph.store.application.dtos.purchase.PurchaseOrderDto
+import wang.ralph.store.application.dtos.purchase.toDto
 import wang.ralph.store.models.cart.Cart
+import wang.ralph.store.models.commodity.Sku
+import wang.ralph.store.models.commodity.Skus
+import wang.ralph.store.models.purchase.PurchaseOrder
 import wang.ralph.store.plugins.subject
 import java.math.BigDecimal
 import java.util.*
@@ -32,5 +37,18 @@ class CartMutation {
         val cart = Cart.ensureCart(dfe.call.subject().userId)
         cart.purge()
         cart.toDto()
+    }
+
+    fun createPurchaseOrder(dfe: DataFetchingEnvironment, cartItemIds: List<String>): PurchaseOrderDto = transaction {
+        val subject = dfe.call.subject()
+        val cart = Cart.ensureCart(subject.userId)
+        val purchaseOrder = PurchaseOrder.create(subject.userId)
+        val items = cart.itemsById(cartItemIds.map { UUID.fromString(it) })
+        items.forEach {
+            val sku = Sku.find { Skus.id eq it.skuId }.first()
+            purchaseOrder.addItem(sku, it.skuAmount)
+            it.delete()
+        }
+        purchaseOrder.toDto()
     }
 }

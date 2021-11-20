@@ -10,19 +10,18 @@ import java.util.*
 
 object Commodities : UUIDTable("commodity") {
     val name = varchar("name", 255)
-    val description = text("description")
+    val description = text("description").clientDefault { "" }
 }
 
 @GraphQLDescription("商品")
 class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Commodity>(Commodities) {
         @GraphQLDescription("根据标签查找商品")
-        fun findByTags(vararg tags: String): SizedIterable<Commodity> {
-            val tagList = tags.distinct().toList()
+        fun findByTags(tags: List<String>): SizedIterable<Commodity> {
             return find {
                 exists(
                     CommodityTags.select {
-                        (CommodityTags.commodity eq Commodities.id) and (CommodityTags.tag inList tagList)
+                        (CommodityTags.commodity eq Commodities.id) and (CommodityTags.tag inList tags.distinct())
                     }
                 )
             }
@@ -42,7 +41,7 @@ class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
     val tags by CommodityTag referrersOn CommodityTags.commodity
 
     @GraphQLDescription("添加标签")
-    fun addTags(vararg tags: String): Commodity {
+    fun addTags(tags: Iterable<String>): Commodity {
         val commodity = this
         tags.forEach { tag ->
             CommodityTag.new {
@@ -54,7 +53,7 @@ class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     @GraphQLDescription("移除标签")
-    fun removeTags(vararg tags: String): Commodity {
+    fun removeTags(tags: Iterable<String>): Commodity {
         CommodityTags.deleteWhere {
             CommodityTags.tag inList tags.toList()
         }

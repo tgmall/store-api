@@ -57,4 +57,11 @@ internal class CartTest {
         cart.purge()
         assertEquals(emptyList(), cart.items.toList())
     }
+
+    @Test
+    fun createOrder() = transaction {
+        val cart = Cart.ensureCart(testingUser.id.value)
+        val skuId = UUID.randomUUID()
+        cart.addItem(skuId, BigDecimal("10.00"))
+    }
 }

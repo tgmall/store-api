@@ -49,4 +49,5 @@ fun initAllTestingData() {
     initTestingCommodityData()
     initTestingPriceData()
     initTestingCommodityCategoryData()
+    initTestingOrderData()
 }

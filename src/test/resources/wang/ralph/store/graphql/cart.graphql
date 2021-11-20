@@ -1,0 +1,10 @@
+query {
+    cart {
+        id
+        items {
+            id
+            skuId
+            skuAmount
+        }
+    }
+}

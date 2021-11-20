@@ -1,0 +1,23 @@
+mutation($cartItemIds: [String!]!) {
+    createPurchaseOrder(cartItemIds: $cartItemIds) {
+        id
+        userId
+        items {
+            id
+            skuId
+            actualPrice
+            actualAmount
+            skuSnapshot {
+                id
+                name
+                description
+                unit
+                price
+                imageUris
+                commodityName
+                commodityDescription
+                commodityTags
+            }
+        }
+    }
+}

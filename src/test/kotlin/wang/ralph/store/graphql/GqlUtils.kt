@@ -13,6 +13,7 @@ import wang.ralph.store.application.dtos.cart.CartDto
 import wang.ralph.store.application.dtos.commodity.CommodityDto
 import wang.ralph.store.application.dtos.portal.CommodityCategoryDto
 import wang.ralph.store.application.dtos.portal.CommodityCategoryTagDto
+import wang.ralph.store.application.dtos.purchase.PurchaseOrderDto
 import java.math.BigDecimal
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -30,8 +31,16 @@ class GqlUtils(val port: Int) {
         this.password = password
     }
 
+    fun cart(): CartDto {
+        return execute(loadResource("cart"))
+    }
+
     fun addCartItem(skuId: String, skuAmount: BigDecimal = BigDecimal.ONE): CartDto {
         return execute(loadResource("addCartItem"), mapOf("skuId" to skuId, "skuAmount" to skuAmount))
+    }
+
+    fun createPurchaseOrder(cartItemIds: List<String>): PurchaseOrderDto {
+        return execute(loadResource("createPurchaseOrder"), mapOf("cartItemIds" to cartItemIds))
     }
 
     fun listCommodities(tags: List<String>): List<CommodityDto> {
