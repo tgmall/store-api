@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.commodity
+package wang.ralph.store.application.commodity
 
 import wang.ralph.store.application.exceptions.CommodityNotPricedException
 import wang.ralph.store.models.commodity.Commodity

@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.price
+package wang.ralph.store.application.price
 
 import wang.ralph.store.models.price.Price
 import java.math.BigDecimal

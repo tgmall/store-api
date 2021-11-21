@@ -3,8 +3,8 @@ package wang.ralph.store
 import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.transactions.transaction
+import wang.ralph.store.application.cart.CartDto
 import wang.ralph.store.application.dtos.UserDto
-import wang.ralph.store.application.dtos.cart.CartDto
 import wang.ralph.store.graphql.GqlUtils
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal

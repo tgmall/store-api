@@ -1,4 +1,4 @@
-package wang.ralph.store.application
+package wang.ralph.store.application.auth
 
 import graphql.schema.DataFetchingEnvironment
 import org.jetbrains.exposed.sql.transactions.transaction

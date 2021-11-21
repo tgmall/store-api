@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.auth
+package wang.ralph.store.application.auth
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 

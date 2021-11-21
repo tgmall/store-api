@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.auth
+package wang.ralph.store.application.auth
 
 import wang.ralph.store.models.auth.Subject
 import wang.ralph.store.models.auth.SubjectType

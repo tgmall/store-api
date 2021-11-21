@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.portal
+package wang.ralph.store.application.portal
 
 import wang.ralph.store.models.portal.CommodityCategory
 

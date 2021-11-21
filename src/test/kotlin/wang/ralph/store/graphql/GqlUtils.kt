@@ -8,12 +8,12 @@ import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import wang.ralph.graphql.GraphQLResponse
 import wang.ralph.graphql.graphQL
+import wang.ralph.store.application.cart.CartDto
+import wang.ralph.store.application.commodity.CommodityDto
 import wang.ralph.store.application.dtos.UserDto
-import wang.ralph.store.application.dtos.cart.CartDto
-import wang.ralph.store.application.dtos.commodity.CommodityDto
-import wang.ralph.store.application.dtos.portal.CommodityCategoryDto
-import wang.ralph.store.application.dtos.portal.CommodityCategoryTagDto
-import wang.ralph.store.application.dtos.purchase.PurchaseOrderDto
+import wang.ralph.store.application.portal.CommodityCategoryDto
+import wang.ralph.store.application.portal.CommodityCategoryTagDto
+import wang.ralph.store.application.purchase.PurchaseOrderDto
 import java.math.BigDecimal
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull

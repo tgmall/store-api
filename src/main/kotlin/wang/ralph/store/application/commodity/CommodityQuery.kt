@@ -1,8 +1,6 @@
-package wang.ralph.store.application
+package wang.ralph.store.application.commodity
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.application.dtos.commodity.CommodityDto
-import wang.ralph.store.application.dtos.commodity.toDto
 import wang.ralph.store.models.commodity.Commodity
 import java.util.*
 

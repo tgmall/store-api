@@ -1,12 +1,9 @@
-package wang.ralph.store.application
+package wang.ralph.store.application.auth
 
 import graphql.schema.DataFetchingEnvironment
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.call
 import wang.ralph.store.application.dtos.UserDto
-import wang.ralph.store.application.dtos.auth.ChangePasswordInput
-import wang.ralph.store.application.dtos.auth.UserCreateInput
-import wang.ralph.store.application.dtos.auth.UserUpdateInput
 import wang.ralph.store.application.dtos.toDto
 import wang.ralph.store.application.exceptions.ForbiddenException
 import wang.ralph.store.application.exceptions.UserNotFoundException

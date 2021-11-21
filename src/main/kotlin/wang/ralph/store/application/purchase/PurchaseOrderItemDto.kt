@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.purchase
+package wang.ralph.store.application.purchase
 
 import wang.ralph.store.models.purchase.PurchaseOrderItem
 import java.math.BigDecimal

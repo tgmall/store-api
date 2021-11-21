@@ -1,7 +1,7 @@
 package wang.ralph.store.models.portal
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.application.dtos.portal.toDto
+import wang.ralph.store.application.portal.toDto
 import wang.ralph.store.setup.commodityCategoryA
 import wang.ralph.store.setup.initTestingCommodityCategoryData
 import wang.ralph.store.setup.initTestingCommodityData

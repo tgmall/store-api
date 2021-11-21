@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.cart
+package wang.ralph.store.application.cart
 
 import wang.ralph.store.models.cart.Cart
 import java.math.BigDecimal

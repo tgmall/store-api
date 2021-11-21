@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos.purchase
+package wang.ralph.store.application.purchase
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import wang.ralph.store.models.purchase.SkuSnapshot
