@@ -16,6 +16,7 @@ import wang.ralph.store.application.portal.CommodityCategoryTagDto
 import wang.ralph.store.application.purchase.PurchaseOrderDto
 import wang.ralph.store.application.shipping.ShipperDto
 import wang.ralph.store.application.shipping.ShippingOrderDto
+import wang.ralph.store.application.stock.StockDto
 import java.math.BigDecimal
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -89,6 +90,10 @@ class GqlUtils(val port: Int) {
                 "avatarUrl" to "/files/$username.svg"
             )
         ))
+    }
+
+    fun getStock(skuId: String): StockDto {
+        return execute(loadResource("stock"), mapOf("skuId" to skuId))
     }
 
     fun listPurchaseOrders(): List<PurchaseOrderDto> {

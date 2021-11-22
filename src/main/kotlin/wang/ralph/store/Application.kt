@@ -14,6 +14,8 @@ import wang.ralph.store.application.purchase.PurchaseOrderQuery
 import wang.ralph.store.application.shipping.ShipperQuery
 import wang.ralph.store.application.shipping.ShippingOrderMutation
 import wang.ralph.store.application.shipping.ShippingOrderQuery
+import wang.ralph.store.application.stock.StockMutation
+import wang.ralph.store.application.stock.StockQuery
 import wang.ralph.store.plugins.configureMonitoring
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSecurity
@@ -41,11 +43,13 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 PurchaseOrderQuery(),
                 ShipperQuery(),
                 ShippingOrderQuery(),
+                StockQuery(),
             ),
             mutations = listOf(
                 UserMutation(),
                 CartMutation(),
                 ShippingOrderMutation(),
+                StockMutation(),
             ),
         )
         configureSecurity()
@@ -60,6 +64,7 @@ fun initAllTestingData() {
     initTestingCartData()
     initTestingTagData()
     initTestingCommodityData()
+    initTestingStockData()
     initTestingPriceData()
     initTestingCommodityCategoryData()
     initTestingShipperData()

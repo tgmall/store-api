@@ -880,6 +880,96 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "stockIn",
+              "description": null,
+              "args": [
+                {
+                  "name": "skuId",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "skuAmount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "BigDecimal",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "StockDto",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "stockOut",
+              "description": null,
+              "args": [
+                {
+                  "name": "skuId",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "skuAmount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "BigDecimal",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "StockDto",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -1366,6 +1456,37 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "stock",
+              "description": null,
+              "args": [
+                {
+                  "name": "skuId",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "StockDto",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -1375,7 +1496,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ReceiverContractDto",
+          "name": "ReceiverContactDto",
           "description": null,
           "fields": [
             {
@@ -1617,7 +1738,7 @@
               "deprecationReason": null
             },
             {
-              "name": "receiverContract",
+              "name": "receiverContact",
               "description": null,
               "args": [],
               "type": {
@@ -1625,7 +1746,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "ReceiverContractDto",
+                  "name": "ReceiverContactDto",
                   "ofType": null
                 }
               },
@@ -1748,14 +1869,38 @@
         {
           "kind": "ENUM",
           "name": "ShippingOrderStatusEnum",
-          "description": null,
+          "description": "运单状态",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
           "enumValues": [
             {
               "name": "Created",
-              "description": null,
+              "description": "刚刚创建",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Paid",
+              "description": "已支付",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Shipping",
+              "description": "待发货",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Shipped",
+              "description": "已发货",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Signed",
+              "description": "已签收",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -2032,6 +2177,65 @@
             {
               "name": "unit",
               "description": "单位",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "StockDto",
+          "description": null,
+          "fields": [
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "skuAmount",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "BigDecimal",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "skuId",
+              "description": null,
               "args": [],
               "type": {
                 "kind": "NON_NULL",

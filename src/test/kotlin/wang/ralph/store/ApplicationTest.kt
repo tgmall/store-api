@@ -73,6 +73,9 @@ class ApplicationTest {
         assertEquals(BigDecimal("100.01"), commodity.minPrice())
         assertEquals(BigDecimal("200.00"), commodity.maxPrice())
         assertEquals(listOf("blueA", "greenA"), commodity.skus.map { it.name })
+        // 显示库存
+        val stock = gql.getStock(commodity.skus.first().id)
+        assertEquals(BigDecimal("100.000"), stock.skuAmount)
         // 加入购物车
         lateinit var cart: CartDto
         cart = gql.addCartItem(commodity.skus.first().id)

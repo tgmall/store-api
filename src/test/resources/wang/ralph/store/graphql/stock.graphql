@@ -1,0 +1,7 @@
+query($skuId: String!) {
+    stock(skuId: $skuId) {
+        id
+        skuId
+        skuAmount
+    }
+}
