@@ -92,6 +92,9 @@ class ApplicationTest {
         // 把已加入订单的条目从购物车中删除
         cart = gql.cart()
         assertEquals(emptyList(), cart.items.map { it.sku().name })
+        // 查看自己的购物订单
+        val purchaseOrders = gql.listPurchaseOrders()
+        assertEquals(listOf(purchaseOrder.id), purchaseOrders.map { it.id })
         // 填写收件信息
         // 付款
         // 确认收货

@@ -66,6 +66,10 @@ class GqlUtils(val port: Int) {
         ))
     }
 
+    fun listPurchaseOrders(): List<PurchaseOrderDto> {
+        return execute(loadResource("purchaseOrders"))
+    }
+
     private inline fun <reified T> execute(query: String, variables: Map<String, Any?>? = null): T = runBlocking {
         val name = query.replace(Regex("""^(query|mutation)[\s\S]*?\{\s*(\w+)[\s\S]*$"""), "$2")
         val response: GraphQLResponse<Map<String, T>> =

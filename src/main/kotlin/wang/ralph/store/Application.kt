@@ -10,6 +10,7 @@ import wang.ralph.store.application.cart.CartMutation
 import wang.ralph.store.application.cart.CartQuery
 import wang.ralph.store.application.commodity.CommodityCategoryQuery
 import wang.ralph.store.application.commodity.CommodityQuery
+import wang.ralph.store.application.purchase.PurchaseOrderQuery
 import wang.ralph.store.plugins.configureMonitoring
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSecurity
@@ -34,10 +35,11 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 CommodityQuery(),
                 CommodityCategoryQuery(),
                 UserQuery(),
+                PurchaseOrderQuery(),
             ),
             mutations = listOf(
                 UserMutation(),
-                CartMutation()
+                CartMutation(),
             ),
         )
         configureSecurity()
