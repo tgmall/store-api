@@ -3,8 +3,6 @@ package wang.ralph.store.application.auth
 import graphql.schema.DataFetchingEnvironment
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.call
-import wang.ralph.store.application.dtos.UserDto
-import wang.ralph.store.application.dtos.toDto
 import wang.ralph.store.models.auth.User
 import wang.ralph.store.plugins.subject
 import javax.security.auth.login.CredentialNotFoundException

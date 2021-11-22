@@ -15,6 +15,7 @@ fun initTestingUserData() {
         username = "username",
         password = "password",
         nickName = "nickName",
+        mobile = "13333333333",
         avatarUrl = "avatarUrl",
     )
 }

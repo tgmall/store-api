@@ -3,6 +3,7 @@ mutation($input: UserCreateInput!) {
         id
         username
         nickName
+        mobile
         avatarUrl
     }
 }

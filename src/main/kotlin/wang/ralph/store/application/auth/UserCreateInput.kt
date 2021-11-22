@@ -10,6 +10,8 @@ data class UserCreateInput(
     val password: String,
     @GraphQLDescription("昵称")
     val nickName: String = username,
+    @GraphQLDescription("手机")
+    val mobile: String,
     @GraphQLDescription("头像 url")
     val avatarUrl: String = "",
 )

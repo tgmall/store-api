@@ -1,0 +1,27 @@
+mutation($purchaseOrderId: String!, $shipperId: String!, $address: String!, $postcode: String!, $receiverName: String!, $receiverMobile: String!) {
+    createShippingOrder(purchaseOrderId: $purchaseOrderId, shipperId: $shipperId, address: $address, postcode: $postcode, receiverName: $receiverName, receiverMobile: $receiverMobile) {
+        id
+        shipper {
+            id
+            name
+            firstWeightFreight
+            additionalWeightFreight
+        }
+        purchaseOrderId
+        receiverContact {
+            id
+            name
+            mobile
+            postcode
+            address
+        }
+        serialNumber
+        status
+        freight
+        items {
+            id
+            skuId
+            skuAmount
+        }
+    }
+}

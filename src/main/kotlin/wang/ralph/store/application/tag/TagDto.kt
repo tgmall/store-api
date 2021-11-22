@@ -1,4 +1,4 @@
-package wang.ralph.store.application.dtos
+package wang.ralph.store.application.tag
 
 import wang.ralph.store.models.tag.Tag
 import wang.ralph.store.models.tag.TagType

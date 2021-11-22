@@ -1,0 +1,8 @@
+query {
+    shippers {
+        id
+        name
+        firstWeightFreight
+        additionalWeightFreight
+    }
+}

@@ -12,6 +12,7 @@ import javax.security.auth.login.CredentialNotFoundException
 object Users : UUIDTable("user") {
     val subjectId = uuid("subject_id")
     val username = varchar("name", length = 64)
+    val mobile = varchar("mobile", 32)
     val encodedPassword = varchar("password", length = 128)
     val nickName = varchar("nick_name", length = 32)
     val avatarUrl = varchar("avatar_url", length = 128).nullable()
@@ -33,11 +34,18 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
         }
 
         @GraphQLDescription("创建/注册")
-        fun create(username: String, password: String, nickName: String, avatarUrl: String? = null): User {
+        fun create(
+            username: String,
+            password: String,
+            nickName: String,
+            mobile: String,
+            avatarUrl: String? = null,
+        ): User {
             val subject = Subject.newPerson(nickName)
             return User.new {
                 this.subjectId = subject.id.value
                 this.username = username
+                this.mobile = mobile
                 this.encodedPassword = encodePassword(password)
                 this.nickName = nickName
                 this.avatarUrl = avatarUrl
@@ -57,12 +65,16 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
     @GraphQLDescription("昵称")
     var nickName: String by Users.nickName
 
+    @GraphQLDescription("手机")
+    var mobile: String by Users.mobile
+
     @GraphQLDescription("头像 url")
     var avatarUrl: String? by Users.avatarUrl
 
     @GraphQLDescription("修改个人信息")
-    fun update(nickName: String? = null, avatarUrl: String? = null) {
+    fun update(nickName: String? = null, mobile: String? = null, avatarUrl: String? = null) {
         nickName?.let { this.nickName = it }
+        mobile?.let { this.mobile = it }
         avatarUrl?.let { this.avatarUrl = it }
         flush()
     }

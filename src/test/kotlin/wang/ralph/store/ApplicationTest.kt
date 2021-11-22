@@ -3,8 +3,8 @@ package wang.ralph.store
 import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.transactions.transaction
+import wang.ralph.store.application.auth.UserDto
 import wang.ralph.store.application.cart.CartDto
-import wang.ralph.store.application.dtos.UserDto
 import wang.ralph.store.graphql.GqlUtils
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
@@ -59,7 +59,7 @@ class ApplicationTest {
     fun consumerE2e() = runBlocking {
         gql.loginAs("username", "password")
         // 注册新用户
-        val user = gql.createUser("wzc", "wzc")
+        val user = gql.createUser("wzc", "wzc", "13333333333")
         assertEquals("wzc", user.username)
         gql.loginAs("wzc", "wzc")
         // 查看商品名录
@@ -96,6 +96,17 @@ class ApplicationTest {
         val purchaseOrders = gql.listPurchaseOrders()
         assertEquals(listOf(purchaseOrder.id), purchaseOrders.map { it.id })
         // 填写收件信息
+        val shippers = gql.listShippers()
+
+        val shippingOrder = gql.createShippingOrder(
+            purchaseOrderId = purchaseOrder.id,
+            shipperId = shippers.first().id,
+            address = "An address",
+            postcode = "100000",
+            receiverName = user.nickName,
+            receiverMobile = user.mobile
+        )
+        assertEquals("WZC", shippingOrder.receiverContact.name)
         // 付款
         // 确认收货
     }

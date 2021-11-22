@@ -30,7 +30,8 @@ internal class UserTest {
         assertEquals("user1", user.username)
     }
 
-    private fun createTestUser() = User.create(username = "user1", password = "123", nickName = "User1")
+    private fun createTestUser() =
+        User.create(username = "user1", password = "123", nickName = "User1", mobile = "13333333333")
 
     @Test
     fun update() = transaction {

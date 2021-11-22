@@ -8,12 +8,14 @@ import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import wang.ralph.graphql.GraphQLResponse
 import wang.ralph.graphql.graphQL
+import wang.ralph.store.application.auth.UserDto
 import wang.ralph.store.application.cart.CartDto
 import wang.ralph.store.application.commodity.CommodityDto
-import wang.ralph.store.application.dtos.UserDto
 import wang.ralph.store.application.portal.CommodityCategoryDto
 import wang.ralph.store.application.portal.CommodityCategoryTagDto
 import wang.ralph.store.application.purchase.PurchaseOrderDto
+import wang.ralph.store.application.shipping.ShipperDto
+import wang.ralph.store.application.shipping.ShippingOrderDto
 import java.math.BigDecimal
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -43,6 +45,28 @@ class GqlUtils(val port: Int) {
         return execute(loadResource("createPurchaseOrder"), mapOf("cartItemIds" to cartItemIds))
     }
 
+    fun listShippers(): List<ShipperDto> {
+        return execute(loadResource("shippers"))
+    }
+
+    fun createShippingOrder(
+        purchaseOrderId: String,
+        shipperId: String,
+        address: String,
+        postcode: String,
+        receiverName: String,
+        receiverMobile: String,
+    ): ShippingOrderDto {
+        return execute(loadResource("createShippingOrder"), mapOf(
+            "purchaseOrderId" to purchaseOrderId,
+            "shipperId" to shipperId,
+            "address" to address,
+            "postcode" to postcode,
+            "receiverName" to receiverName,
+            "receiverMobile" to receiverMobile,
+        ))
+    }
+
     fun listCommodities(tags: List<String>): List<CommodityDto> {
         return execute(loadResource("commodities"), mapOf("tags" to tags))
     }
@@ -55,12 +79,13 @@ class GqlUtils(val port: Int) {
         return execute(loadResource("commodityCategories"))
     }
 
-    fun createUser(username: String, password: String): UserDto {
+    fun createUser(username: String, password: String, mobile: String): UserDto {
         return execute(loadResource("createUser"), mapOf(
             "input" to mapOf(
                 "username" to username,
                 "password" to password,
                 "nickName" to username.uppercase(),
+                "mobile" to mobile,
                 "avatarUrl" to "/files/$username.svg"
             )
         ))
