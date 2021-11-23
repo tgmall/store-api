@@ -57,7 +57,6 @@ class ApplicationTest {
 
     @Test
     fun consumerE2e() = runBlocking {
-        gql.loginAs("username", "password")
         // 注册新用户
         val user = gql.createUser("wzc", "wzc", "13333333333")
         assertEquals("wzc", user.username)

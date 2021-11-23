@@ -35,7 +35,7 @@ fun Application.configureRouting() {
     routing {
         graphqlSchema()
         graphqlPlayground()
-        authenticate("basic") {
+        authenticate("basic", optional = true) {
             graphql()
         }
     }
