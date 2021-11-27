@@ -42,10 +42,7 @@ class ShippingOrder(id: EntityID<UUID>) : UUIDEntity(id) {
             userId: UUID,
             purchaseOrderId: UUID,
             shipperId: UUID,
-            receiverName: String,
-            receiverMobile: String,
             address: String,
-            postcode: String,
             skus: Iterable<ShippingSkuItem>,
         ): ShippingOrder {
             val shippingOrder = ShippingOrder.new {
@@ -55,13 +52,6 @@ class ShippingOrder(id: EntityID<UUID>) : UUIDEntity(id) {
                 this.shipper = Shipper.get(shipperId)
                 this.freight = shipper.calculateFreight(address, skus)
                 this.status = ShippingOrderStatusEnum.Created
-            }
-            ReceiverContact.new {
-                this.shippingOrder = shippingOrder
-                this.name = receiverName
-                this.mobile = receiverMobile
-                this.address = address
-                this.postcode = postcode
             }
             skus.forEach {
                 ShippingOrderItem.new {
@@ -86,9 +76,6 @@ class ShippingOrder(id: EntityID<UUID>) : UUIDEntity(id) {
 
     @GraphQLDescription("运单内容")
     val items by ShippingOrderItem referrersOn ShippingOrderItems.shippingOrder
-
-    @GraphQLDescription("收件地址")
-    val receiverContact by ReceiverContact backReferencedOn ReceiverContacts.shippingOrder
 
     @GraphQLDescription("承运人")
     var shipper by Shipper referencedOn ShippingOrders.shipper

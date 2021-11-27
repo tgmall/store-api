@@ -42,8 +42,20 @@ class GqlUtils(val port: Int) {
         return execute(loadResource("addCartItem"), mapOf("skuId" to skuId, "skuAmount" to skuAmount))
     }
 
-    fun createPurchaseOrder(cartItemIds: List<String>): PurchaseOrderDto {
-        return execute(loadResource("createPurchaseOrder"), mapOf("cartItemIds" to cartItemIds))
+    fun createPurchaseOrder(
+        cartItemIds: List<String>,
+        receiverName: String,
+        receiverMobile: String,
+        address: String,
+        postcode: String,
+    ): PurchaseOrderDto {
+        return execute(loadResource("createPurchaseOrder"), mapOf(
+            "cartItemIds" to cartItemIds,
+            "receiverName" to receiverName,
+            "receiverMobile" to receiverMobile,
+            "address" to address,
+            "postcode" to postcode,
+        ))
     }
 
     fun listShippers(): List<ShipperDto> {
@@ -53,18 +65,10 @@ class GqlUtils(val port: Int) {
     fun createShippingOrder(
         purchaseOrderId: String,
         shipperId: String,
-        address: String,
-        postcode: String,
-        receiverName: String,
-        receiverMobile: String,
     ): ShippingOrderDto {
         return execute(loadResource("createShippingOrder"), mapOf(
             "purchaseOrderId" to purchaseOrderId,
             "shipperId" to shipperId,
-            "address" to address,
-            "postcode" to postcode,
-            "receiverName" to receiverName,
-            "receiverMobile" to receiverMobile,
         ))
     }
 

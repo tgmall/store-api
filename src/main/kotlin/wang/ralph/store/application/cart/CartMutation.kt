@@ -37,10 +37,23 @@ class CartMutation {
         cart.toDto()
     }
 
-    fun createPurchaseOrder(dfe: DataFetchingEnvironment, cartItemIds: List<String>): PurchaseOrderDto = transaction {
+    fun createPurchaseOrder(
+        dfe: DataFetchingEnvironment,
+        cartItemIds: List<String>,
+        receiverName: String,
+        receiverMobile: String,
+        address: String,
+        postcode: String,
+    ): PurchaseOrderDto = transaction {
         val subject = dfe.call.subject()
         val cart = Cart.ensureCart(subject.userId)
-        val purchaseOrder = PurchaseOrder.create(subject.userId)
+        val purchaseOrder = PurchaseOrder.create(
+            userId = subject.userId,
+            receiverName = receiverName,
+            receiverMobile = receiverMobile,
+            address = address,
+            postcode = postcode,
+        )
         val items = cart.itemsById(cartItemIds.map { UUID.fromString(it) })
         items.forEach {
             val sku = Sku.find { Skus.id eq it.skuId }.first()

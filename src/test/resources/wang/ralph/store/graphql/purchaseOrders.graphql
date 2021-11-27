@@ -2,6 +2,13 @@ query {
     purchaseOrders {
         id
         userId
+        receiverContact {
+            id
+            name
+            mobile
+            postcode
+            address
+        }
         items {
             id
             skuId

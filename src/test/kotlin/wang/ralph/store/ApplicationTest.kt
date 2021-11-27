@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.application.auth.UserDto
 import wang.ralph.store.application.cart.CartDto
 import wang.ralph.store.graphql.GqlUtils
+import wang.ralph.store.models.shipping.ShippingOrderStatusEnum
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
 import kotlin.test.BeforeTest
@@ -89,7 +90,13 @@ class ApplicationTest {
         assertEquals(listOf(BigDecimal("2.00"), BigDecimal("1.00")), cart.items.map { it.skuAmount })
         assertEquals(BigDecimal("400.0200"), cart.total())
         // 使用购物车中的商品去结算
-        val purchaseOrder = gql.createPurchaseOrder(cart.items.mapNotNull { it.id })
+        val purchaseOrder = gql.createPurchaseOrder(
+            cartItemIds = cart.items.mapNotNull { it.id },
+            address = "An address",
+            postcode = "100000",
+            receiverName = user.nickName,
+            receiverMobile = user.mobile
+        )
         assertEquals(BigDecimal("100.01"), purchaseOrder.items.first().skuSnapshot.price)
         // 把已加入订单的条目从购物车中删除
         cart = gql.cart()
@@ -103,12 +110,8 @@ class ApplicationTest {
         val shippingOrder = gql.createShippingOrder(
             purchaseOrderId = purchaseOrder.id,
             shipperId = shippers.first().id,
-            address = "An address",
-            postcode = "100000",
-            receiverName = user.nickName,
-            receiverMobile = user.mobile
         )
-        assertEquals("WZC", shippingOrder.receiverContact.name)
+        assertEquals(ShippingOrderStatusEnum.Created, shippingOrder.status)
         // 付款
         // 确认收货
     }

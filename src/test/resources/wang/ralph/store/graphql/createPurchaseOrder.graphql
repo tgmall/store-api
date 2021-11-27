@@ -1,7 +1,14 @@
-mutation($cartItemIds: [String!]!) {
-    createPurchaseOrder(cartItemIds: $cartItemIds) {
+mutation($cartItemIds: [String!]!, $address: String!, $postcode: String!, $receiverName: String!, $receiverMobile: String!) {
+    createPurchaseOrder(cartItemIds: $cartItemIds, address: $address, postcode: $postcode, receiverName: $receiverName, receiverMobile: $receiverMobile) {
         id
         userId
+        receiverContact {
+            id
+            name
+            mobile
+            postcode
+            address
+        }
         items {
             id
             skuId

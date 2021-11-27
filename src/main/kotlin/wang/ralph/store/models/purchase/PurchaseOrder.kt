@@ -1,5 +1,6 @@
 package wang.ralph.store.models.purchase
 
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -36,11 +37,31 @@ class PurchaseOrder(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     companion object : UUIDEntityClass<PurchaseOrder>(PurchaseOrders) {
-        fun create(userId: UUID): PurchaseOrder = PurchaseOrder.new {
-            this.userId = userId
+        fun create(
+            userId: UUID,
+            receiverName: String,
+            receiverMobile: String,
+            address: String,
+            postcode: String,
+        ): PurchaseOrder {
+            val purchaseOrder = PurchaseOrder.new {
+                this.userId = userId
+            }
+            ReceiverContact.new {
+                this.purchaseOrder = purchaseOrder
+                this.name = receiverName
+                this.mobile = receiverMobile
+                this.address = address
+                this.postcode = postcode
+            }
+            return purchaseOrder
         }
     }
 
     val items by PurchaseOrderItem referrersOn PurchaseOrderItems.purchaseOrder
+
+    @GraphQLDescription("收件地址")
+    val receiverContact by ReceiverContact backReferencedOn ReceiverContacts.purchaseOrder
+
     var userId by PurchaseOrders.userId
 }

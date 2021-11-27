@@ -69,5 +69,5 @@ fun initAllTestingData() {
     initTestingCommodityCategoryData()
     initTestingShipperData()
     initTestingShippingOrderData()
-    initTestingOrderData()
+    initTestingPurchaseOrderData()
 }

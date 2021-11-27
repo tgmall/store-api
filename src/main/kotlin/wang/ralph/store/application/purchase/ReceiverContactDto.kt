@@ -1,6 +1,6 @@
-package wang.ralph.store.application.shipping
+package wang.ralph.store.application.purchase
 
-import wang.ralph.store.models.shipping.ReceiverContact
+import wang.ralph.store.models.purchase.ReceiverContact
 
 fun ReceiverContact.toDto(): ReceiverContactDto = ReceiverContactDto(
     id = id.toString(),

@@ -14,10 +14,6 @@ class ShippingOrderMutation {
         dfe: DataFetchingEnvironment,
         purchaseOrderId: String,
         shipperId: String,
-        receiverName: String,
-        receiverMobile: String,
-        address: String,
-        postcode: String,
     ): ShippingOrderDto = transaction {
         val userId = dfe.call.subject().userId
         val purchaseOrder = PurchaseOrderQuery().purchaseOrder(dfe, purchaseOrderId)
@@ -25,15 +21,9 @@ class ShippingOrderMutation {
             userId = userId,
             purchaseOrderId = UUID.fromString(purchaseOrderId),
             shipperId = UUID.fromString(shipperId),
-            receiverName = receiverName,
-            receiverMobile = receiverMobile,
-            address = address,
-            postcode = postcode,
+            address = purchaseOrder.receiverContact.address,
             skus = purchaseOrder.items.map {
-                ShippingSkuItem(
-                    UUID.fromString(it.skuId),
-                    it.actualAmount,
-                )
+                ShippingSkuItem(UUID.fromString(it.skuId), it.actualAmount)
             }
         )
         shippingOrder.toDto()

@@ -1,5 +1,5 @@
-mutation($purchaseOrderId: String!, $shipperId: String!, $address: String!, $postcode: String!, $receiverName: String!, $receiverMobile: String!) {
-    createShippingOrder(purchaseOrderId: $purchaseOrderId, shipperId: $shipperId, address: $address, postcode: $postcode, receiverName: $receiverName, receiverMobile: $receiverMobile) {
+mutation($purchaseOrderId: String!, $shipperId: String!) {
+    createShippingOrder(purchaseOrderId: $purchaseOrderId, shipperId: $shipperId) {
         id
         shipper {
             id
@@ -8,13 +8,6 @@ mutation($purchaseOrderId: String!, $shipperId: String!, $address: String!, $pos
             additionalWeightFreight
         }
         purchaseOrderId
-        receiverContact {
-            id
-            name
-            mobile
-            postcode
-            address
-        }
         serialNumber
         status
         freight

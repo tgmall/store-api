@@ -8,7 +8,6 @@ fun ShippingOrder.toDto(): ShippingOrderDto = ShippingOrderDto(
     id = id.toString(),
     purchaseOrderId = purchaseOrderId.toString(),
     items = items.map { it.toDto() },
-    receiverContact = receiverContact.toDto(),
     shipper = shipper.toDto(),
     serialNumber = serialNumber,
     freight = freight,
@@ -21,9 +20,6 @@ data class ShippingOrderDto(
     val purchaseOrderId: String,
     // 运单内容
     val items: List<ShippingOrderItemDto>,
-
-    // 收件地址
-    val receiverContact: ReceiverContactDto,
 
     // 承运人
     val shipper: ShipperDto,
