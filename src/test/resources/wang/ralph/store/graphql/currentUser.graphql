@@ -5,5 +5,17 @@ query {
         nickName
         mobile
         avatarUrl
+        subject {
+            id
+            name
+            type
+            contact {
+                id
+                name
+                mobile
+                address
+                postcode
+            }
+        }
     }
 }

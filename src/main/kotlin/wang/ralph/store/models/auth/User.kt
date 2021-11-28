@@ -10,7 +10,7 @@ import java.util.*
 import javax.security.auth.login.CredentialNotFoundException
 
 object Users : UUIDTable("user") {
-    val subjectId = uuid("subject_id")
+    val subject = reference("subject_id", Subjects)
     val username = varchar("name", length = 64)
     val mobile = varchar("mobile", 32)
     val encodedPassword = varchar("password", length = 128)
@@ -43,7 +43,7 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
         ): User {
             val subject = Subject.newPerson(nickName)
             return User.new {
-                this.subjectId = subject.id.value
+                this.subject = subject
                 this.username = username
                 this.mobile = mobile
                 this.encodedPassword = encodePassword(password)
@@ -53,8 +53,8 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
         }
     }
 
-    @GraphQLDescription("所属主体的 id")
-    var subjectId: UUID by Users.subjectId
+    @GraphQLDescription("所属主体")
+    var subject by Subject referencedOn Users.subject
 
     @GraphQLDescription("用户名")
     var username: String by Users.username

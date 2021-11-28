@@ -21,7 +21,7 @@ fun Application.configureSecurity() {
     }
 }
 
-fun User.toPrincipal(): SubjectPrincipal = SubjectPrincipal(this.subjectId, this.id.value)
+fun User.toPrincipal(): SubjectPrincipal = SubjectPrincipal(this.subject.id.value, this.id.value)
 
 fun ApplicationCall.subject(): SubjectPrincipal {
     return this.principal() ?: throw CredentialNotFoundException()

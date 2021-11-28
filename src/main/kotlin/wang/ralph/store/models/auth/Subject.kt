@@ -42,6 +42,9 @@ class Subject(id: EntityID<UUID>) : UUIDEntity(id) {
 
     @GraphQLDescription("类型")
     var type: SubjectType by Subjects.type
+
+    @GraphQLDescription("联系人")
+    val contacts by Contact referrersOn Contacts.subject
 }
 
 
