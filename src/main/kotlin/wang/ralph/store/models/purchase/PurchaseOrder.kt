@@ -64,4 +64,6 @@ class PurchaseOrder(id: EntityID<UUID>) : UUIDEntity(id) {
     val receiverContact by ReceiverContact backReferencedOn ReceiverContacts.purchaseOrder
 
     var userId by PurchaseOrders.userId
+
+    val amount get() = items.sumOf { it.actualPrice * it.actualAmount }
 }

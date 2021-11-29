@@ -32,4 +32,6 @@ data class ShippingOrderDto(
 
     // 状态
     val status: ShippingOrderStatusEnum,
-)
+) {
+    val amount get() = freight
+}

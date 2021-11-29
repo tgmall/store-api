@@ -26,5 +26,6 @@ mutation($cartItemIds: [String!]!, $address: String!, $postcode: String!, $recei
                 commodityTags
             }
         }
+        amount
     }
 }
