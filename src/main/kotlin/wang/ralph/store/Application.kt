@@ -4,6 +4,8 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.graphql.configureGraphQL
+import wang.ralph.store.application.account.PaymentGatewayQuery
+import wang.ralph.store.application.account.PaymentMutation
 import wang.ralph.store.application.auth.UserMutation
 import wang.ralph.store.application.auth.UserQuery
 import wang.ralph.store.application.cart.CartMutation
@@ -44,12 +46,14 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 ShipperQuery(),
                 ShippingOrderQuery(),
                 StockQuery(),
+                PaymentGatewayQuery(),
             ),
             mutations = listOf(
                 UserMutation(),
                 CartMutation(),
                 ShippingOrderMutation(),
                 StockMutation(),
+                PaymentMutation(),
             ),
         )
         configureSecurity()
@@ -70,4 +74,5 @@ fun initAllTestingData() {
     initTestingShipperData()
     initTestingShippingOrderData()
     initTestingPurchaseOrderData()
+    initTestingPaymentData()
 }

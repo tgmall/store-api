@@ -1,6 +1,5 @@
 package wang.ralph.store.application.shipping
 
-import com.expediagroup.graphql.generator.scalars.ID
 import graphql.schema.DataFetchingEnvironment
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -16,11 +15,10 @@ class ShippingOrderQuery {
         ShippingOrder.find { ShippingOrders.userId eq userId }.map { it.toDto() }
     }
 
-    fun shippingOrder(dfe: DataFetchingEnvironment, purchaseOrderId: ID): List<ShippingOrderDto> = transaction {
+    fun shippingOrder(dfe: DataFetchingEnvironment, purchaseOrderId: String): ShippingOrderDto = transaction {
         val userId = dfe.call.subject().userId
         ShippingOrder.find {
-            (ShippingOrders.userId eq userId) and (ShippingOrders.purchaseOrderId eq UUID.fromString(purchaseOrderId.toString()))
-        }
-            .map { it.toDto() }
+            (ShippingOrders.userId eq userId) and (ShippingOrders.purchaseOrderId eq UUID.fromString(purchaseOrderId))
+        }.first().toDto()
     }
 }
