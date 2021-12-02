@@ -9,10 +9,10 @@ import wang.ralph.store.models.auth.Users
 lateinit var testingUser: User;
 fun initTestingUserData() {
     SchemaUtils.drop(Contacts)
-    SchemaUtils.drop(Subjects)
     SchemaUtils.drop(Users)
-    SchemaUtils.create(Users)
+    SchemaUtils.drop(Subjects)
     SchemaUtils.create(Subjects)
+    SchemaUtils.create(Users)
     SchemaUtils.create(Contacts)
 
     testingUser = User.create(

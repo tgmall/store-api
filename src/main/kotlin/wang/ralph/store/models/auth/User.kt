@@ -72,7 +72,8 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
     var avatarUrl: String? by Users.avatarUrl
 
     @GraphQLDescription("修改个人信息")
-    fun update(nickName: String? = null, mobile: String? = null, avatarUrl: String? = null) {
+    fun update(name: String? = null, nickName: String? = null, mobile: String? = null, avatarUrl: String? = null) {
+        name?.let { this.subject.name = name }
         nickName?.let { this.nickName = it }
         mobile?.let { this.mobile = it }
         avatarUrl?.let { this.avatarUrl = it }

@@ -27,7 +27,7 @@ object Payments : UUIDTable("payment") {
     val voucherNum = varchar("voucher_num", 64).nullable()
     val gateway = reference("gateway_id", PaymentGateways)
     val amount = decimal("amount", 10, 2)
-    val reason = varchar("reason", 255)
+    val reason = varchar("reason", 255).default("")
     val status = enumerationByName("status", 32, PaymentStatus::class)
 }
 
