@@ -8,6 +8,7 @@ import wang.ralph.store.application.account.PaymentGatewayQuery
 import wang.ralph.store.application.account.PaymentMutation
 import wang.ralph.store.application.auth.UserMutation
 import wang.ralph.store.application.auth.UserQuery
+import wang.ralph.store.application.captcha.CaptchaMutation
 import wang.ralph.store.application.cart.CartMutation
 import wang.ralph.store.application.cart.CartQuery
 import wang.ralph.store.application.commodity.CommodityCategoryQuery
@@ -54,6 +55,7 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 ShippingOrderMutation(),
                 StockMutation(),
                 PaymentMutation(),
+                CaptchaMutation(),
             ),
         )
         configureSecurity()
@@ -75,4 +77,5 @@ fun initAllTestingData() {
     initTestingShippingOrderData()
     initTestingPurchaseOrderData()
     initTestingPaymentData()
+    initTestingCaptchaData()
 }
