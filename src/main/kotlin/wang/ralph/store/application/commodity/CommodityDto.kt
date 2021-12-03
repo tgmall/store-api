@@ -1,7 +1,7 @@
 package wang.ralph.store.application.commodity
 
-import wang.ralph.store.application.exceptions.CommodityNotPricedException
 import wang.ralph.store.models.commodity.Commodity
+import wang.ralph.store.models.commodity.CommodityNotPricedException
 import java.math.BigDecimal
 
 fun Commodity.toDto(): CommodityDto = CommodityDto(id.toString(), name, description, skus.map { it.toDto() })

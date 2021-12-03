@@ -40,7 +40,7 @@ class CartMutation {
     fun createPurchaseOrder(
         dfe: DataFetchingEnvironment,
         cartItemIds: List<String>,
-        receiverName: String,
+        receiverName: String?,
         receiverMobile: String,
         address: String,
         postcode: String,

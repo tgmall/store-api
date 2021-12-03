@@ -1,4 +1,6 @@
-package wang.ralph.store.application.exceptions
+package wang.ralph.store.models.commodity
+
+import wang.ralph.store.models.exceptions.DomainRuleViolationException
 
 class CommodityNotPricedException(val id: String) : DomainRuleViolationException() {
     override val message: String

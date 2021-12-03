@@ -1,7 +1,6 @@
 package wang.ralph.store.models.auth
 
 import at.favre.lib.crypto.bcrypt.BCrypt
-import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -11,19 +10,19 @@ import javax.security.auth.login.CredentialNotFoundException
 
 object Users : UUIDTable("user") {
     val subject = reference("subject_id", Subjects)
-    val username = varchar("name", length = 64)
-    val mobile = varchar("mobile", 32)
+    val username = varchar("name", length = 64).nullable().uniqueIndex()
+    val mobile = varchar("mobile", 32).uniqueIndex()
     val encodedPassword = varchar("password", length = 128)
-    val nickName = varchar("nick_name", length = 32)
+    val nickName = varchar("nick_name", length = 32).default("")
     val avatarUrl = varchar("avatar_url", length = 128).nullable()
 }
 
-@GraphQLDescription("用户")
+// 用户
 class User(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<User>(Users) {
-        @GraphQLDescription("认证")
-        fun authenticate(username: String, password: String): User? {
-            val user = find { Users.username eq username }.firstOrNull()
+        // 认证
+        fun authenticate(mobile: String, password: String): User? {
+            val user = find { Users.mobile eq mobile }.firstOrNull()
             return user?.let {
                 if (verifyPassword(password, user.encodedPassword)) {
                     it
@@ -33,54 +32,56 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
             }
         }
 
-        @GraphQLDescription("创建/注册")
-        fun create(
-            username: String,
-            password: String,
-            nickName: String,
+        // 注册
+        fun register(
+            // 手机号
             mobile: String,
-            avatarUrl: String? = null,
+            // 密码
+            password: String,
         ): User {
-            val subject = Subject.newPerson(nickName)
+            if (!User.find { Users.mobile eq mobile }.empty()) {
+                throw UserMobileExistsException(mobile)
+            }
+            val subject = Subject.newPerson()
             return User.new {
                 this.subject = subject
-                this.username = username
                 this.mobile = mobile
                 this.encodedPassword = encodePassword(password)
-                this.nickName = nickName
-                this.avatarUrl = avatarUrl
             }
         }
     }
 
-    @GraphQLDescription("所属主体")
+    // 所属主体
     var subject by Subject referencedOn Users.subject
 
-    @GraphQLDescription("用户名")
-    var username: String by Users.username
+    // 用户名
+    var username by Users.username
 
-    @GraphQLDescription("加密过的密码")
-    var encodedPassword: String by Users.encodedPassword
+    // 加密过的密码
+    var encodedPassword by Users.encodedPassword
 
-    @GraphQLDescription("昵称")
-    var nickName: String by Users.nickName
+    // 昵称
+    var nickName by Users.nickName
 
-    @GraphQLDescription("手机")
-    var mobile: String by Users.mobile
+    // 手机
+    var mobile by Users.mobile
 
-    @GraphQLDescription("头像 url")
-    var avatarUrl: String? by Users.avatarUrl
+    // 头像 url
+    var avatarUrl by Users.avatarUrl
 
-    @GraphQLDescription("修改个人信息")
+    // 修改个人信息
     fun update(name: String? = null, nickName: String? = null, mobile: String? = null, avatarUrl: String? = null) {
-        name?.let { this.subject.name = name }
+        name?.let {
+            this.subject.name = name
+            this.subject.flush()
+        }
         nickName?.let { this.nickName = it }
         mobile?.let { this.mobile = it }
         avatarUrl?.let { this.avatarUrl = it }
         flush()
     }
 
-    @GraphQLDescription("修改密码")
+    // 修改密码
     fun changePassword(oldPassword: String, newPassword: String) {
         if (verifyPassword(oldPassword, encodedPassword)) {
             this.encodedPassword = encodePassword(newPassword)

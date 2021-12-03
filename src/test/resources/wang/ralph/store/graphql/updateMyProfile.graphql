@@ -1,0 +1,21 @@
+mutation ($name: String, $nickName: String, $avatarUrl: String) {
+    updateMyProfile(name: $name, nickName: $nickName, avatarUrl: $avatarUrl) {
+        id
+        username
+        nickName
+        mobile
+        avatarUrl
+        subject {
+            id
+            name
+            type
+            contact {
+                id
+                name
+                mobile
+                address
+                postcode
+            }
+        }
+    }
+}

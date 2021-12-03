@@ -17,13 +17,13 @@ fun User.toDto(): UserDto = UserDto(
 data class UserDto(
     val id: String,
     @GraphQLDescription("用户名")
-    val username: String,
+    val username: String?,
     @GraphQLDescription("昵称")
-    val nickName: String = username,
+    val nickName: String? = username,
     @GraphQLDescription("手机")
     val mobile: String,
     @GraphQLDescription("头像 url")
-    val avatarUrl: String = "",
+    val avatarUrl: String?,
     @GraphQLDescription("主体")
     val subject: SubjectDto,
 )

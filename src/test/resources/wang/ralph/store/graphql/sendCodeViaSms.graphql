@@ -1,0 +1,3 @@
+mutation($mobile: String!, $captchaId: String!, $captchaValue: String!) {
+    sendCodeViaSms(mobile: $mobile, captchaId: $captchaId, captchaValue: $captchaValue)
+}

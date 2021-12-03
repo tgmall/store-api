@@ -1,4 +1,4 @@
-package wang.ralph.store.application.exceptions
+package wang.ralph.store.models.exceptions
 
 abstract class DomainRuleViolationException : RuntimeException() {
     override val message: String

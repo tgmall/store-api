@@ -26,11 +26,11 @@ class GqlUtils(val port: Int) {
     private val client = HttpClient(CIO) {
         install(JsonFeature)
     }
-    private var username: String? = null
+    private var mobile: String? = null
     private var password: String? = null
 
-    fun loginAs(username: String, password: String) {
-        this.username = username
+    fun loginAs(mobile: String, password: String) {
+        this.mobile = mobile
         this.password = password
     }
 
@@ -44,7 +44,7 @@ class GqlUtils(val port: Int) {
 
     fun createPurchaseOrder(
         cartItemIds: List<String>,
-        receiverName: String,
+        receiverName: String?,
         receiverMobile: String,
         address: String,
         postcode: String,
@@ -84,15 +84,41 @@ class GqlUtils(val port: Int) {
         return execute(loadResource("commodityCategories"))
     }
 
-    fun createUser(username: String, password: String, mobile: String): UserDto {
-        return execute(loadResource("createUser"), mapOf(
-            "input" to mapOf(
-                "username" to username,
-                "password" to password,
-                "nickName" to username.uppercase(),
-                "mobile" to mobile,
-                "avatarUrl" to "/files/$username.svg"
-            )
+    data class CaptchaDto(val id: String, val imageUrl: String)
+
+    fun createCaptcha(): CaptchaDto {
+        return execute(loadResource("createCaptcha"))
+    }
+
+    fun sendCodeViaSms(
+        mobile: String,
+        captchaId: String,
+        captchaValue: String,
+    ): String {
+        return execute(loadResource("sendCodeViaSms"), mapOf(
+            "mobile" to mobile,
+            "captchaId" to captchaId,
+            "captchaValue" to captchaValue,
+        ))
+    }
+
+    fun register(mobile: String, password: String): UserDto {
+        return execute(loadResource("register"), mapOf(
+            "mobile" to mobile,
+            "password" to password,
+            "smsCode" to "123456",
+        ))
+    }
+
+    fun updateMyProfile(
+        name: String? = null,
+        nickName: String? = null,
+        avatarUrl: String? = null,
+    ): UserDto {
+        return execute(loadResource("updateMyProfile"), mapOf(
+            "name" to name,
+            "nickName" to nickName,
+            "avatarUrl" to avatarUrl,
         ))
     }
 
@@ -108,8 +134,8 @@ class GqlUtils(val port: Int) {
         val name = query.replace(Regex("""^(query|mutation)[\s\S]*?\{\s*(\w+)[\s\S]*$"""), "$2")
         val response: GraphQLResponse<Map<String, T>> =
             client.graphQL("http://localhost:${port}/graphql", query.trimIndent(), variables) {
-                if (username != null) {
-                    val encodeBase64 = "$username:$password".encodeBase64()
+                if (mobile != null) {
+                    val encodeBase64 = "$mobile:$password".encodeBase64()
                     header("Authorization", "Basic $encodeBase64")
                 }
             }

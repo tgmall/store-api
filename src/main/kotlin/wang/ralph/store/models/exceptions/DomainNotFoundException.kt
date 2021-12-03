@@ -1,4 +1,4 @@
-package wang.ralph.store.application.exceptions
+package wang.ralph.store.models.exceptions
 
 import java.util.*
 

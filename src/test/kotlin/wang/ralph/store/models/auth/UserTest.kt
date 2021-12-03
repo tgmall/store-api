@@ -20,18 +20,18 @@ internal class UserTest {
     @Test
     fun authenticate() = transaction {
         createTestUser()
-        assertEquals("user1", User.authenticate("user1", "123")?.username)
+        assertEquals("13333333334", User.authenticate("13333333334", "123")?.mobile)
     }
 
     @Test
     fun create() = transaction {
         val user = createTestUser()
         assertNotNull(user)
-        assertEquals("user1", user.username)
+        assertEquals("13333333334", user.mobile)
     }
 
     private fun createTestUser() =
-        User.create(username = "user1", password = "123", nickName = "User1", mobile = "13333333333")
+        User.register(password = "123", mobile = "13333333334")
 
     @Test
     fun update() = transaction {

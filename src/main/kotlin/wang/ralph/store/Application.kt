@@ -19,6 +19,7 @@ import wang.ralph.store.application.shipping.ShippingOrderMutation
 import wang.ralph.store.application.shipping.ShippingOrderQuery
 import wang.ralph.store.application.stock.StockMutation
 import wang.ralph.store.application.stock.StockQuery
+import wang.ralph.store.application.utils.MobileVerificationMutation
 import wang.ralph.store.plugins.configureMonitoring
 import wang.ralph.store.plugins.configureRouting
 import wang.ralph.store.plugins.configureSecurity
@@ -48,6 +49,8 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 ShippingOrderQuery(),
                 StockQuery(),
                 PaymentGatewayQuery(),
+
+                // CaptchaQuery(), // 仅供内部使用，不要对外暴露
             ),
             mutations = listOf(
                 UserMutation(),
@@ -56,6 +59,7 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 StockMutation(),
                 PaymentMutation(),
                 CaptchaMutation(),
+                MobileVerificationMutation(),
             ),
         )
         configureSecurity()
@@ -78,4 +82,5 @@ fun initAllTestingData() {
     initTestingPurchaseOrderData()
     initTestingPaymentData()
     initTestingCaptchaData()
+    initTestingMobileVerificationData()
 }

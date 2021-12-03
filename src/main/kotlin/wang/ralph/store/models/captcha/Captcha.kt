@@ -29,8 +29,8 @@ class Captcha(id: EntityID<UUID>) : UUIDEntity(id) {
     fun generateImage(): BufferedImage = drawCaptcha(value)
 }
 
-internal fun randomText(size: Int): String {
-    val base24Charset = "ZAC2B3EF4GH5TK67P8RS9WXY";
+val base24Charset = "ZAC2B3EF4GH5TK67P8RS9WXY";
+internal fun randomText(size: Int, charset: String = base24Charset): String {
     return (1..size).map {
         val index = SecureRandom().nextInt(base24Charset.length)
         base24Charset[index]

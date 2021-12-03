@@ -6,9 +6,12 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.application.auth.UserDto
 import wang.ralph.store.application.cart.CartDto
 import wang.ralph.store.graphql.GqlUtils
+import wang.ralph.store.models.captcha.Captcha
+import wang.ralph.store.models.captcha.Captchas
 import wang.ralph.store.models.shipping.ShippingOrderStatusEnum
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
+import java.util.*
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -37,9 +40,9 @@ class ApplicationTest {
 
     @Test
     fun currentUser() = runBlocking {
-        gql.loginAs("username", "password")
+        gql.loginAs("13333333333", "password")
         val user: UserDto = gql.getCurrentUser()
-        assertEquals("username", user.username)
+        assertEquals("13333333333", user.mobile)
     }
 
     @Test
@@ -58,10 +61,17 @@ class ApplicationTest {
 
     @Test
     fun consumerE2e() = runBlocking {
+        val mobile = "13333333335"
+        // 生成 Captcha
+        val captcha = gql.createCaptcha();
+        // 发送验证码
+        gql.sendCodeViaSms(mobile,
+            captcha.id,
+            transaction { Captcha.find { Captchas.id eq UUID.fromString(captcha.id) }.first().value })
         // 注册新用户
-        val user = gql.createUser("wzc", "wzc", "13333333333")
-        assertEquals("wzc", user.username)
-        gql.loginAs("wzc", "wzc")
+        val user = gql.register(mobile, "wzc")
+        assertEquals("13333333335", user.mobile)
+        gql.loginAs("13333333335", "wzc")
         // 查看商品名录
         val categories = gql.listCommodityCategories()
         assertEquals(listOf("root"), categories.map { it.name })
@@ -89,12 +99,15 @@ class ApplicationTest {
         cart = gql.addCartItem(commodity.skus.last().id)
         assertEquals(listOf(BigDecimal("2.00"), BigDecimal("1.00")), cart.items.map { it.skuAmount })
         assertEquals(BigDecimal("400.0200"), cart.total())
+        // 填写姓名
+        val subject = gql.updateMyProfile(name = "wzc").subject;
+        assertEquals("wzc", subject.name)
         // 使用购物车中的商品去结算
         val purchaseOrder = gql.createPurchaseOrder(
             cartItemIds = cart.items.mapNotNull { it.id },
             address = "An address",
             postcode = "100000",
-            receiverName = user.nickName,
+            receiverName = subject.name,
             receiverMobile = user.mobile
         )
         assertEquals(BigDecimal("100.01"), purchaseOrder.items.first().skuSnapshot.price)

@@ -3,8 +3,8 @@ package wang.ralph.store.application.cart
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.application.commodity.SkuDto
 import wang.ralph.store.application.commodity.toDto
-import wang.ralph.store.application.exceptions.CommodityNotPricedException
 import wang.ralph.store.models.cart.CartItem
+import wang.ralph.store.models.commodity.CommodityNotPricedException
 import wang.ralph.store.models.commodity.Sku
 import java.math.BigDecimal
 import java.util.*

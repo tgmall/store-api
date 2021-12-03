@@ -1,3 +1,3 @@
-package wang.ralph.store.application.exceptions
+package wang.ralph.store.models.exceptions
 
 open class ForbiddenException : DomainException()

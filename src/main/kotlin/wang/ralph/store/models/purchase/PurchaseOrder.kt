@@ -39,7 +39,7 @@ class PurchaseOrder(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<PurchaseOrder>(PurchaseOrders) {
         fun create(
             userId: UUID,
-            receiverName: String,
+            receiverName: String?,
             receiverMobile: String,
             address: String,
             postcode: String,
@@ -49,7 +49,7 @@ class PurchaseOrder(id: EntityID<UUID>) : UUIDEntity(id) {
             }
             ReceiverContact.new {
                 this.purchaseOrder = purchaseOrder
-                this.name = receiverName
+                this.name = receiverName ?: throw IllegalArgumentException("用户必须已经填写姓名")
                 this.mobile = receiverMobile
                 this.address = address
                 this.postcode = postcode

@@ -1,4 +1,4 @@
-package wang.ralph.store.application.exceptions
+package wang.ralph.store.models.exceptions
 
 abstract class DomainException : RuntimeException() {
     val code get() = javaClass.simpleName.replace(Regex("Exception$"), "")

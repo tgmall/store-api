@@ -15,11 +15,8 @@ fun initTestingUserData() {
     SchemaUtils.create(Users)
     SchemaUtils.create(Contacts)
 
-    testingUser = User.create(
-        username = "username",
-        password = "password",
-        nickName = "nickName",
+    testingUser = User.register(
         mobile = "13333333333",
-        avatarUrl = "avatarUrl",
+        password = "password",
     )
 }

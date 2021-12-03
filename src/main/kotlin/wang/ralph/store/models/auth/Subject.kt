@@ -17,7 +17,7 @@ enum class SubjectType {
 }
 
 object Subjects : UUIDTable("subject") {
-    val name = varchar("name", 255)
+    val name = varchar("name", 255).nullable()
     val type = enumerationByName("type", 32, SubjectType::class)
 }
 
@@ -25,7 +25,7 @@ object Subjects : UUIDTable("subject") {
 class Subject(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Subject>(Subjects) {
         @GraphQLDescription("新建个人")
-        fun newPerson(name: String) = Subject.new {
+        fun newPerson(name: String? = null) = Subject.new {
             this.type = SubjectType.Person
             this.name = name
         }
@@ -38,10 +38,10 @@ class Subject(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     @GraphQLDescription("名称")
-    var name: String by Subjects.name
+    var name by Subjects.name
 
     @GraphQLDescription("类型")
-    var type: SubjectType by Subjects.type
+    var type by Subjects.type
 
     @GraphQLDescription("联系人")
     val contacts by Contact referrersOn Contacts.subject

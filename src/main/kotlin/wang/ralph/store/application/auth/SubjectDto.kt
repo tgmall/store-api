@@ -12,7 +12,7 @@ fun Subject.toDto(): SubjectDto = SubjectDto(
 
 class SubjectDto(
     val id: String,
-    val name: String,
+    val name: String?,
     val type: SubjectType,
     val contact: List<ContactDto>,
 )
