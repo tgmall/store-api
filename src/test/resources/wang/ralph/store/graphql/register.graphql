@@ -1,4 +1,4 @@
-mutation ($mobile: String!, $smsCode: String!, $password: String!) {
+mutation register($mobile: String!, $smsCode: String!, $password: String!) {
     register(password: $password, mobile: $mobile, smsCode: $smsCode) {
         id
         username

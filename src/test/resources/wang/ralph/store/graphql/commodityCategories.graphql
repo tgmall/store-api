@@ -1,4 +1,4 @@
-query {
+query commodityCategories {
     commodityCategories {
         id
         name

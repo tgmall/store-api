@@ -1,4 +1,4 @@
-query($tags: [String!]!) {
+query commodities($tags: [String!]!) {
     commodities(tags: $tags) {
         id
         name

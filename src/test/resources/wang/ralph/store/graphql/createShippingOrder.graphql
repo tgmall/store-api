@@ -1,4 +1,4 @@
-mutation($purchaseOrderId: String!, $shipperId: String!) {
+mutation createShippingOrder($purchaseOrderId: String!, $shipperId: String!) {
     createShippingOrder(purchaseOrderId: $purchaseOrderId, shipperId: $shipperId) {
         id
         shipper {

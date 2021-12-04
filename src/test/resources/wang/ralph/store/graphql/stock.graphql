@@ -1,4 +1,4 @@
-query($skuId: String!) {
+query stock($skuId: String!) {
     stock(skuId: $skuId) {
         id
         skuId

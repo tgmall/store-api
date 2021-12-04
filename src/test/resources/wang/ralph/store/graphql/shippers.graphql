@@ -1,4 +1,4 @@
-query {
+query shippers {
     shippers {
         id
         name

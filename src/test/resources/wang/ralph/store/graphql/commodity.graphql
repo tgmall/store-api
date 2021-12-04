@@ -1,4 +1,4 @@
-query($id: String!) {
+query commodity($id: String!) {
     commodity(id: $id) {
         id
         name
