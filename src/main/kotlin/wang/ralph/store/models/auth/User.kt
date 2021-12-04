@@ -49,6 +49,10 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
                 this.encodedPassword = encodePassword(password)
             }
         }
+
+        fun mobileExists(mobile: String): Boolean {
+            return !User.find { Users.mobile eq mobile }.empty()
+        }
     }
 
     // 所属主体

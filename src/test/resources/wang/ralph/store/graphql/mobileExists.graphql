@@ -1,0 +1,3 @@
+query mobileExists($mobile: String!) {
+    mobileExists(mobile: $mobile)
+}

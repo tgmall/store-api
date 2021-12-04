@@ -12,7 +12,11 @@ class UserQuery {
         User[dfe.call.subject().userId].toDto()
     }
 
-    fun authenticate(username: String, password: String): UserDto = transaction {
-        User.authenticate(username, password)?.toDto() ?: throw CredentialNotFoundException()
+    fun authenticate(mobile: String, password: String): UserDto = transaction {
+        User.authenticate(mobile, password)?.toDto() ?: throw CredentialNotFoundException()
+    }
+
+    fun mobileExists(mobile: String): Boolean = transaction {
+        User.mobileExists(mobile)
     }
 }

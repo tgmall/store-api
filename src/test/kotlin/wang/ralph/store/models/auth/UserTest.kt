@@ -3,10 +3,7 @@ package wang.ralph.store.models.auth
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.setup.initTestingUserData
 import wang.ralph.store.setup.setupTestingDb
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
+import kotlin.test.*
 
 internal class UserTest {
     @BeforeTest()
@@ -39,5 +36,10 @@ internal class UserTest {
 
         user.update(nickName = "nickName2")
         assertEquals("nickName2", User[user.id.value].nickName)
+    }
+
+    @Test
+    fun exists() = transaction {
+        assertTrue(User.mobileExists("13333333333"))
     }
 }

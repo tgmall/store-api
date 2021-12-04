@@ -873,13 +873,9 @@
                   "name": "receiverName",
                   "description": null,
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -1811,7 +1807,7 @@
               "description": null,
               "args": [
                 {
-                  "name": "username",
+                  "name": "mobile",
                   "description": null,
                   "type": {
                     "kind": "NON_NULL",
@@ -1861,6 +1857,37 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "UserDto",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "mobileExists",
+              "description": null,
+              "args": [
+                {
+                  "name": "mobile",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
                   "ofType": null
                 }
               },
