@@ -8,6 +8,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import wang.ralph.graphql.graphql
 import wang.ralph.graphql.graphqlPlayground
+import wang.ralph.store.application.auth.jwtRoute
 import wang.ralph.store.models.exceptions.DomainNotFoundException
 import javax.security.auth.login.CredentialNotFoundException
 
@@ -33,8 +34,9 @@ fun Application.configureRouting() {
     }
     routing {
         graphqlPlayground()
-        authenticate("basic", optional = true) {
+        authenticate("auth-jwt", optional = true) {
             graphql()
         }
+        jwtRoute()
     }
 }

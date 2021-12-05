@@ -4,6 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import wang.ralph.graphql.GraphQLResponse
@@ -26,12 +27,18 @@ class GqlUtils(val port: Int) {
     private val client = HttpClient(CIO) {
         install(JsonFeature)
     }
-    private var mobile: String? = null
-    private var password: String? = null
 
-    fun loginAs(mobile: String, password: String) {
-        this.mobile = mobile
-        this.password = password
+    var jwt: String? = null
+
+    suspend fun loginAs(mobile: String, password: String) {
+        data class LoginRequest(val mobile: String, val password: String)
+        data class LoginResponse(val userId: String, val jwt: String)
+
+        val response: LoginResponse = client.post("http://localhost:${port}/jwt") {
+            contentType(ContentType.Application.Json)
+            body = LoginRequest(mobile, password)
+        }
+        jwt = response.jwt
     }
 
     fun cart(): CartDto {
@@ -134,9 +141,8 @@ class GqlUtils(val port: Int) {
         val name = query.replace(Regex("""^(query|mutation)[\s\S]*?\{\s*(\w+)[\s\S]*$"""), "$2")
         val response: GraphQLResponse<Map<String, T>> =
             client.graphQL("http://localhost:${port}/graphql", query.trimIndent(), variables) {
-                if (mobile != null) {
-                    val encodeBase64 = "$mobile:$password".encodeBase64()
-                    header("Authorization", "Basic $encodeBase64")
+                if (jwt != null) {
+                    header("Authorization", "Bearer $jwt")
                 }
             }
         assertNull(response.errors)

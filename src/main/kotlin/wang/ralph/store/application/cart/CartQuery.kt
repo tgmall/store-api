@@ -2,13 +2,12 @@ package wang.ralph.store.application.cart
 
 import graphql.schema.DataFetchingEnvironment
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.graphql.call
 import wang.ralph.store.models.cart.Cart
-import wang.ralph.store.plugins.subject
+import wang.ralph.store.plugins.userId
 
 class CartQuery {
     fun cart(dfe: DataFetchingEnvironment): CartDto = transaction {
-        val userId = dfe.call.subject().userId
+        val userId = dfe.userId
         val cart = Cart.ensureCart(userId)
         cart.toDto()
     }

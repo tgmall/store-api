@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.application.purchase.PurchaseOrderQuery
 import wang.ralph.store.application.shipping.ShippingOrderQuery
 import wang.ralph.store.models.account.Payment
-import wang.ralph.store.plugins.SubjectPrincipal
+import wang.ralph.store.plugins.userId
 import java.util.*
 
 class PaymentMutation {
@@ -15,7 +15,7 @@ class PaymentMutation {
         purchaseOrderId: String,
         shippingOrderId: String,
     ): PaymentDto = transaction {
-        val userId = dfe.getLocalContext<SubjectPrincipal>().userId
+        val userId = dfe.userId
         val purchaseOrder = PurchaseOrderQuery().purchaseOrder(dfe, purchaseOrderId)
         val shippingOrder = ShippingOrderQuery().shippingOrder(dfe, shippingOrderId)
         Payment.pay(

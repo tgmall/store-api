@@ -3,11 +3,10 @@ package wang.ralph.store.application.auth
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import graphql.schema.DataFetchingEnvironment
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.graphql.call
 import wang.ralph.store.models.auth.User
 import wang.ralph.store.models.auth.UserNotFoundException
 import wang.ralph.store.models.utils.MobileVerification
-import wang.ralph.store.plugins.subject
+import wang.ralph.store.plugins.userId
 
 class UserMutation {
     @GraphQLDescription("注册新用户")
@@ -37,10 +36,10 @@ class UserMutation {
         @GraphQLDescription("头像 url")
         avatarUrl: String? = null,
     ): UserDto = transaction {
-        val subject = dfe.call.subject()
-        val user = User.findById(subject.userId) ?: throw UserNotFoundException(subject.userId)
+        val userId = dfe.userId
+        val user = User.findById(userId) ?: throw UserNotFoundException(userId)
         user.update(name = name, nickName = nickName, avatarUrl = avatarUrl)
-        User[subject.userId].toDto()
+        User[userId].toDto()
     }
 
     @GraphQLDescription("修改自身的密码")
@@ -51,9 +50,9 @@ class UserMutation {
         @GraphQLDescription("新密码")
         newPassword: String,
     ) = transaction {
-        val subject = dfe.call.subject()
-        val user = User.findById(subject.userId) ?: throw UserNotFoundException(subject.userId)
+        val userId = dfe.userId
+        val user = User.findById(userId) ?: throw UserNotFoundException(userId)
         user.changePassword(oldPassword, newPassword)
-        User[subject.userId].toDto()
+        User[userId].toDto()
     }
 }
