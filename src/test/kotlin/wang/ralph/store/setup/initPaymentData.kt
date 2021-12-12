@@ -1,15 +1,11 @@
 package wang.ralph.store.setup
 
-import org.jetbrains.exposed.sql.SchemaUtils
-import wang.ralph.store.models.account.*
+import wang.ralph.store.models.account.Payment
+import wang.ralph.store.models.account.PaymentGateway
+import wang.ralph.store.models.account.PaymentStatus
 import java.math.BigDecimal
 
-fun initTestingPaymentData() {
-    SchemaUtils.drop(Payments)
-    SchemaUtils.drop(PaymentGateways)
-    SchemaUtils.create(PaymentGateways)
-    SchemaUtils.create(Payments)
-
+fun initPaymentData() {
     val alipay = PaymentGateway.new {
         name = "支付宝"
         iconUri = "/files/alipay.svg"

@@ -2,8 +2,7 @@ package wang.ralph.store.models.cart.models
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.models.cart.Cart
-import wang.ralph.store.setup.initTestingCartData
-import wang.ralph.store.setup.initTestingUserData
+import wang.ralph.store.recreateAllTables
 import wang.ralph.store.setup.setupTestingDb
 import wang.ralph.store.setup.testingUser
 import java.math.BigDecimal
@@ -17,8 +16,7 @@ internal class CartTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingUserData()
-            initTestingCartData()
+            recreateAllTables()
         }
     }
 

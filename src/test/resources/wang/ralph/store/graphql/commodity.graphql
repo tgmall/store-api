@@ -8,7 +8,8 @@ query commodity($id: String!) {
             name
             description
             images {
-                imageUri
+                smallImageUrl
+                largeImageUrl
             }
             unit
             price

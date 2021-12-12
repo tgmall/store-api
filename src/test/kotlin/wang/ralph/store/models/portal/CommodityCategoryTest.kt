@@ -2,10 +2,8 @@ package wang.ralph.store.models.portal
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import wang.ralph.store.application.portal.toDto
-import wang.ralph.store.setup.commodityCategoryA
-import wang.ralph.store.setup.initTestingCommodityCategoryData
-import wang.ralph.store.setup.initTestingCommodityData
-import wang.ralph.store.setup.setupTestingDb
+import wang.ralph.store.recreateAllTables
+import wang.ralph.store.setup.*
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -15,8 +13,10 @@ internal class CommodityCategoryTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingCommodityData()
-            initTestingCommodityCategoryData()
+            recreateAllTables()
+            initTagData()
+            initCommodityCategoryData()
+            initCommodityData()
         }
     }
 

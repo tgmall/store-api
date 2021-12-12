@@ -1,49 +1,54 @@
 package wang.ralph.store.models.auth
 
-import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import java.util.*
 
-@GraphQLDescription("行为主体的类型")
+// 行为主体的类型
 enum class SubjectType {
-    @GraphQLDescription("个人")
+    // 个人
     Person,
 
-    @GraphQLDescription("公司")
+    // 公司
     Company,
 }
 
 object Subjects : UUIDTable("subject") {
     val name = varchar("name", 255).nullable()
     val type = enumerationByName("type", 32, SubjectType::class)
+    val description = text("description").nullable()
 }
 
-@GraphQLDescription("行为主体")
+// 行为主体
 class Subject(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Subject>(Subjects) {
-        @GraphQLDescription("新建个人")
-        fun newPerson(name: String? = null) = Subject.new {
+        // 新建个人
+        fun newPerson(name: String? = null, description: String? = null) = Subject.new {
             this.type = SubjectType.Person
             this.name = name
+            this.description = description
         }
 
-        @GraphQLDescription("新建公司")
-        fun newCompany(name: String) = Subject.new {
+        // 新建公司
+        fun newCompany(name: String? = null, description: String? = null) = Subject.new {
             this.type = SubjectType.Company
             this.name = name
+            this.description = description
         }
     }
 
-    @GraphQLDescription("名称")
+    // 名称
     var name by Subjects.name
 
-    @GraphQLDescription("类型")
+    // 类型
     var type by Subjects.type
 
-    @GraphQLDescription("联系人")
+    // 简介
+    var description by Subjects.description
+
+    // 联系人
     val contacts by Contact referrersOn Contacts.subject
 }
 

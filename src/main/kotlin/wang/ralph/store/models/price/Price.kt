@@ -1,6 +1,5 @@
 package wang.ralph.store.models.price
 
-import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -17,10 +16,10 @@ object Prices : UUIDTable("price") {
     val validTo = timestamp("validTo")
 }
 
-@GraphQLDescription("价目条目")
+// 价目条目
 class Price(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Price>(Prices) {
-        @GraphQLDescription("寻找特定 SKU 在特定时间的价目")
+        // 寻找特定 SKU 在特定时间的价目
         fun findPrice(skuId: UUID, now: Instant = Instant.now()): Price? {
             return find {
                 (Prices.skuId eq skuId) and
@@ -29,15 +28,15 @@ class Price(id: EntityID<UUID>) : UUIDEntity(id) {
         }
     }
 
-    @GraphQLDescription("SKU 的 ID")
+    // SKU 的 ID
     var skuId by Prices.skuId
 
-    @GraphQLDescription("SKU 的数量")
+    // SKU 的数量
     var skuAmount by Prices.skuAmount
 
-    @GraphQLDescription("生效时间（闭区间）")
+    // 生效时间（闭区间）
     var validFrom by Prices.validFrom
 
-    @GraphQLDescription("失效时间（开区间）")
+    // 失效时间（开区间）
     var validTo by Prices.validTo
 }

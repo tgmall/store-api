@@ -1,7 +1,7 @@
 package wang.ralph.store.models.captcha
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.setup.initTestingCaptchaData
+import wang.ralph.store.recreateAllTables
 import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.*
 
@@ -10,7 +10,7 @@ internal class CaptchaKtTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingCaptchaData()
+            recreateAllTables()
         }
     }
 

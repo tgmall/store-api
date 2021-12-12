@@ -1,7 +1,8 @@
 package wang.ralph.store.models.auth
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.setup.initTestingUserData
+import wang.ralph.store.recreateAllTables
+import wang.ralph.store.setup.initUserData
 import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.*
 
@@ -10,7 +11,8 @@ internal class UserTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingUserData()
+            recreateAllTables()
+            initUserData()
         }
     }
 

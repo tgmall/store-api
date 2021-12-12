@@ -1,6 +1,5 @@
 package wang.ralph.store.models.shipping
 
-import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -8,21 +7,21 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import java.math.BigDecimal
 import java.util.*
 
-@GraphQLDescription("运单状态")
+// 运单状态
 enum class ShippingOrderStatusEnum {
-    @GraphQLDescription("刚刚创建")
+    // 刚刚创建
     Created,
 
-    @GraphQLDescription("已支付")
+    // 已支付
     Paid,
 
-    @GraphQLDescription("待发货")
+    // 待发货
     Shipping,
 
-    @GraphQLDescription("已发货")
+    // 已发货
     Shipped,
 
-    @GraphQLDescription("已签收")
+    // 已签收
     Signed,
 }
 
@@ -35,7 +34,7 @@ object ShippingOrders : UUIDTable("shipping_order") {
     val status = enumerationByName("status", 32, ShippingOrderStatusEnum::class)
 }
 
-@GraphQLDescription("运单")
+// 运单
 class ShippingOrder(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<ShippingOrder>(ShippingOrders) {
         fun create(
@@ -68,25 +67,25 @@ class ShippingOrder(id: EntityID<UUID>) : UUIDEntity(id) {
         }
     }
 
-    @GraphQLDescription("所属用户的 ID")
+    // 所属用户的 ID
     var userId by ShippingOrders.userId
 
-    @GraphQLDescription("要发货的订购单")
+    // 要发货的订购单
     var purchaseOrderId by ShippingOrders.purchaseOrderId
 
-    @GraphQLDescription("运单内容")
+    // 运单内容
     val items by ShippingOrderItem referrersOn ShippingOrderItems.shippingOrder
 
-    @GraphQLDescription("承运人")
+    // 承运人
     var shipper by Shipper referencedOn ShippingOrders.shipper
 
-    @GraphQLDescription("运单号")
+    // 运单号
     var serialNumber by ShippingOrders.serialNumber
 
-    @GraphQLDescription("运价")
+    // 运价
     var freight by ShippingOrders.freight
 
-    @GraphQLDescription("状态")
+    // 状态
     var status by ShippingOrders.status
 }
 

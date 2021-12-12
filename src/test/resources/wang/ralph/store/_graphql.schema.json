@@ -414,6 +414,22 @@
           "description": null,
           "fields": [
             {
+              "name": "description",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "id",
               "description": null,
               "args": [],
@@ -2464,38 +2480,38 @@
         {
           "kind": "ENUM",
           "name": "ShippingOrderStatusEnum",
-          "description": "运单状态",
+          "description": null,
           "fields": null,
           "inputFields": null,
           "interfaces": null,
           "enumValues": [
             {
               "name": "Created",
-              "description": "刚刚创建",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "Paid",
-              "description": "已支付",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "Shipping",
-              "description": "待发货",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "Shipped",
-              "description": "已发货",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "Signed",
-              "description": "已签收",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -2619,7 +2635,23 @@
           "description": null,
           "fields": [
             {
-              "name": "imageUri",
+              "name": "largeImageUrl",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "smallImageUrl",
               "description": null,
               "args": [],
               "type": {
@@ -2942,20 +2974,20 @@
         {
           "kind": "ENUM",
           "name": "SubjectType",
-          "description": "行为主体的类型",
+          "description": null,
           "fields": null,
           "inputFields": null,
           "interfaces": null,
           "enumValues": [
             {
               "name": "Person",
-              "description": "个人",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "Company",
-              "description": "公司",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             }

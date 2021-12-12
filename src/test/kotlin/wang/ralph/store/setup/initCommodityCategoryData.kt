@@ -1,10 +1,7 @@
 package wang.ralph.store.setup
 
-import org.jetbrains.exposed.sql.SchemaUtils
-import wang.ralph.store.models.portal.CommodityCategories
 import wang.ralph.store.models.portal.CommodityCategory
 import wang.ralph.store.models.portal.CommodityCategoryTag
-import wang.ralph.store.models.portal.CommodityCategoryTags
 
 lateinit var commodityCategoryRoot: CommodityCategory
 lateinit var commodityCategoryA: CommodityCategory
@@ -15,12 +12,7 @@ lateinit var commodityCategoryB1: CommodityCategory
 lateinit var commodityCategoryB2: CommodityCategory
 lateinit var commodityCategoryA11: CommodityCategory
 
-fun initTestingCommodityCategoryData() {
-    SchemaUtils.drop(CommodityCategoryTags)
-    SchemaUtils.drop(CommodityCategories)
-    SchemaUtils.create(CommodityCategories)
-    SchemaUtils.create(CommodityCategoryTags)
-
+fun initCommodityCategoryData() {
     commodityCategoryRoot = CommodityCategory.new {
         name = "root"
     }

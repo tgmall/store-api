@@ -1,6 +1,5 @@
 package wang.ralph.store.models.purchase
 
-import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -28,7 +27,7 @@ class PurchaseOrder(id: EntityID<UUID>) : UUIDEntity(id) {
             this.description = sku.description
             this.unit = sku.unit
             this.price = sku.price
-            this.imageUris = sku.images.map { it.imageUri }.joinToString(";")
+            this.imageUris = sku.images.flatMap { listOf(it.largeImageUrl, it.smallImageUrl) }.joinToString(";")
             this.commodityName = sku.commodity.name
             this.commodityDescription = sku.commodity.description
             this.commodityTags = sku.commodity.tags.map { it.tag }.joinToString(";")
@@ -60,7 +59,7 @@ class PurchaseOrder(id: EntityID<UUID>) : UUIDEntity(id) {
 
     val items by PurchaseOrderItem referrersOn PurchaseOrderItems.purchaseOrder
 
-    @GraphQLDescription("收件地址")
+    // 收件地址
     val receiverContact by ReceiverContact backReferencedOn ReceiverContacts.purchaseOrder
 
     var userId by PurchaseOrders.userId

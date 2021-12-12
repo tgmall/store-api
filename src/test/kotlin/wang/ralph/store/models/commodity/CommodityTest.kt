@@ -1,8 +1,10 @@
 package wang.ralph.store.models.commodity
 
 import org.jetbrains.exposed.sql.transactions.transaction
+import wang.ralph.store.recreateAllTables
 import wang.ralph.store.setup.commodityA
-import wang.ralph.store.setup.initTestingCommodityData
+import wang.ralph.store.setup.initCommodityData
+import wang.ralph.store.setup.initTagData
 import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -13,7 +15,9 @@ internal class CommodityTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingCommodityData()
+            recreateAllTables()
+            initTagData()
+            initCommodityData()
         }
     }
 

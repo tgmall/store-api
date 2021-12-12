@@ -8,7 +8,8 @@ query commodities($tags: [String!]!) {
             name
             description
             images {
-                imageUri
+                smallImageUrl
+                largeImageUrl
             }
             unit
             price

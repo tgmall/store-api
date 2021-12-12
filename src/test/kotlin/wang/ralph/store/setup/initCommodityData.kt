@@ -1,7 +1,9 @@
 package wang.ralph.store.setup
 
-import org.jetbrains.exposed.sql.SchemaUtils
-import wang.ralph.store.models.commodity.*
+import wang.ralph.store.models.commodity.Commodity
+import wang.ralph.store.models.commodity.CommodityTag
+import wang.ralph.store.models.commodity.Sku
+import wang.ralph.store.models.commodity.SkuImage
 import java.math.BigDecimal
 
 lateinit var commodityA: Commodity
@@ -14,17 +16,7 @@ lateinit var skuB1: Sku
 lateinit var skuB2: Sku
 lateinit var skuImageB11: SkuImage
 lateinit var skuImageB21: SkuImage
-
-fun initTestingCommodityData() {
-    SchemaUtils.drop(CommodityTags)
-    SchemaUtils.drop(SkuImages)
-    SchemaUtils.drop(Skus)
-    SchemaUtils.drop(Commodities)
-    SchemaUtils.create(Commodities)
-    SchemaUtils.create(Skus)
-    SchemaUtils.create(SkuImages)
-    SchemaUtils.create(CommodityTags)
-
+fun initCommodityData() {
     commodityA = Commodity.new {
         name = "commodityA"
         description = "commodityA description"
@@ -42,11 +34,13 @@ fun initTestingCommodityData() {
         price = BigDecimal("200.00")
     }
     skuImageA11 = SkuImage.new {
-        imageUri = "/uriA11"
+        smallImageUrl = "/uriA11"
+        largeImageUrl = "/uriA11"
         sku = skuA1
     }
     skuImageA12 = SkuImage.new {
-        imageUri = "/uriA12"
+        smallImageUrl = "/uriA12"
+        largeImageUrl = "/uriA12"
         sku = skuA1
     }
     commodityB = Commodity.new {
@@ -66,11 +60,13 @@ fun initTestingCommodityData() {
         price = BigDecimal("2000.0")
     }
     skuImageB11 = SkuImage.new {
-        imageUri = "/uriB11"
+        smallImageUrl = "/uriB11"
+        largeImageUrl = "/uriB11"
         sku = skuB1
     }
     skuImageB21 = SkuImage.new {
-        imageUri = "/uriB21"
+        smallImageUrl = "/uriB21"
+        largeImageUrl = "/uriB21"
         sku = skuB2
     }
     CommodityTag.new {

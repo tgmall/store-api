@@ -1,7 +1,8 @@
 package wang.ralph.store.models.tag
 
 import org.jetbrains.exposed.sql.transactions.transaction
-import wang.ralph.store.setup.initTestingTagData
+import wang.ralph.store.recreateAllTables
+import wang.ralph.store.setup.initTagData
 import wang.ralph.store.setup.setupTestingDb
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -12,7 +13,8 @@ internal class TagTest {
     fun setup() {
         setupTestingDb()
         transaction {
-            initTestingTagData()
+            recreateAllTables()
+            initTagData()
         }
     }
 

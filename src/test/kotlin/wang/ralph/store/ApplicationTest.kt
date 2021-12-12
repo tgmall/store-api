@@ -9,6 +9,7 @@ import wang.ralph.store.graphql.GqlUtils
 import wang.ralph.store.models.captcha.Captcha
 import wang.ralph.store.models.captcha.Captchas
 import wang.ralph.store.models.shipping.ShippingOrderStatusEnum
+import wang.ralph.store.setup.initAllData
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
 import java.util.*
@@ -30,10 +31,10 @@ class ApplicationTest {
         if (!inited) {
             setupTestingDb()
             transaction {
-                initAllTestingData()
+                recreateAllTables()
+                initAllData()
             }
-            createEmbeddedServer(port)
-                .start(wait = false)
+            createEmbeddedServer(port).start(wait = false)
             inited = true
         }
     }
@@ -103,13 +104,11 @@ class ApplicationTest {
         val subject = gql.updateMyProfile(name = "wzc").subject;
         assertEquals("wzc", subject.name)
         // 使用购物车中的商品去结算
-        val purchaseOrder = gql.createPurchaseOrder(
-            cartItemIds = cart.items.mapNotNull { it.id },
+        val purchaseOrder = gql.createPurchaseOrder(cartItemIds = cart.items.mapNotNull { it.id },
             address = "An address",
             postcode = "100000",
             receiverName = subject.name,
-            receiverMobile = user.mobile
-        )
+            receiverMobile = user.mobile)
         assertEquals(BigDecimal("100.01"), purchaseOrder.items.first().skuSnapshot.price)
         // 把已加入订单的条目从购物车中删除
         cart = gql.cart()
@@ -142,3 +141,4 @@ class ApplicationTest {
         // 添加 SKU
     }
 }
+

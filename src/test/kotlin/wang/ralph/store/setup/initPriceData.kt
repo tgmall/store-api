@@ -1,17 +1,12 @@
 package wang.ralph.store.setup
 
-import org.jetbrains.exposed.sql.SchemaUtils
 import wang.ralph.store.models.price.Price
-import wang.ralph.store.models.price.Prices
 import java.math.BigDecimal
 import java.time.Instant
 
 lateinit var priceA11: Price
 lateinit var priceA12: Price
-
-fun initTestingPriceData() {
-    SchemaUtils.drop(Prices)
-    SchemaUtils.create(Prices)
+fun initPriceData() {
     priceA11 = Price.new {
         skuId = skuA1.id.value
         skuAmount = BigDecimal("100.01")
