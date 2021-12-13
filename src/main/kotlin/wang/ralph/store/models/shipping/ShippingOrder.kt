@@ -8,7 +8,7 @@ import java.math.BigDecimal
 import java.util.*
 
 // 运单状态
-enum class ShippingOrderStatusEnum {
+enum class ShippingOrderStatus {
     // 刚刚创建
     Created,
 
@@ -31,7 +31,7 @@ object ShippingOrders : UUIDTable("shipping_order") {
     val shipper = reference("shipper_id", Shippers)
     val serialNumber = varchar("serial_number", 64)
     val freight = decimal("freight", 10, 2)
-    val status = enumerationByName("status", 32, ShippingOrderStatusEnum::class)
+    val status = enumerationByName("status", 32, ShippingOrderStatus::class)
 }
 
 // 运单
@@ -50,7 +50,7 @@ class ShippingOrder(id: EntityID<UUID>) : UUIDEntity(id) {
                 this.purchaseOrderId = purchaseOrderId
                 this.shipper = Shipper.get(shipperId)
                 this.freight = shipper.calculateFreight(address, skus)
-                this.status = ShippingOrderStatusEnum.Created
+                this.status = ShippingOrderStatus.Created
             }
             skus.forEach {
                 ShippingOrderItem.new {

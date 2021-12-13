@@ -1,7 +1,7 @@
 package wang.ralph.store.application.shipping
 
 import wang.ralph.store.models.shipping.ShippingOrder
-import wang.ralph.store.models.shipping.ShippingOrderStatusEnum
+import wang.ralph.store.models.shipping.ShippingOrderStatus
 import java.math.BigDecimal
 
 fun ShippingOrder.toDto(): ShippingOrderDto = ShippingOrderDto(
@@ -31,7 +31,7 @@ data class ShippingOrderDto(
     val freight: BigDecimal,
 
     // 状态
-    val status: ShippingOrderStatusEnum,
+    val status: ShippingOrderStatus,
 ) {
     val amount get() = freight
 }

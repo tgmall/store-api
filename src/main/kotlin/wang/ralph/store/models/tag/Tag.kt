@@ -40,10 +40,10 @@ class Tag(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     // 类型
-    var type: TagType by Tags.type
+    var type by Tags.type
 
     // 名称
-    var tag: String by Tags.tag
+    var tag by Tags.tag
 
     // 标签说明
     var description by Tags.description

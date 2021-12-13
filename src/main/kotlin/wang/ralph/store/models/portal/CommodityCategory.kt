@@ -22,7 +22,7 @@ class CommodityCategory(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     // 分类名
-    var name: String by CommodityCategories.name
+    var name by CommodityCategories.name
 
     // 父级分类
     var parent by CommodityCategory optionalReferencedOn CommodityCategories.parent

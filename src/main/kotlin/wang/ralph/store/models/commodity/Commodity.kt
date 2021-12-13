@@ -28,10 +28,10 @@ class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     // 商品名称
-    var name: String by Commodities.name
+    var name by Commodities.name
 
     // 商品描述
-    var description: String by Commodities.description
+    var description by Commodities.description
 
     // 本商品下的所有 SKU 列表
     val skus by Sku referrersOn Skus.commodity

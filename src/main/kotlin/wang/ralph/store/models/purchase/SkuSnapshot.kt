@@ -4,7 +4,6 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
-import java.math.BigDecimal
 import java.util.*
 
 object SkuSnapshots : UUIDTable("sku_snapshot") {
@@ -27,26 +26,26 @@ class SkuSnapshot(id: EntityID<UUID>) : UUIDEntity(id) {
     var purchaseOrderItem by PurchaseOrderItem referencedOn SkuSnapshots.purchaseOrderItem
 
     // 名称
-    var name: String by SkuSnapshots.name
+    var name by SkuSnapshots.name
 
     // 描述
-    var description: String by SkuSnapshots.description
+    var description by SkuSnapshots.description
 
     // 单位
-    var unit: String by SkuSnapshots.unit
+    var unit by SkuSnapshots.unit
 
     // 价格
-    var price: BigDecimal? by SkuSnapshots.price
+    var price by SkuSnapshots.price
 
     // 图片
-    var imageUris: String by SkuSnapshots.imageUris
+    var imageUris by SkuSnapshots.imageUris
 
     // 所属商品名称
-    var commodityName: String by SkuSnapshots.commodityName
+    var commodityName by SkuSnapshots.commodityName
 
     // 所属商品描述
-    var commodityDescription: String by SkuSnapshots.commodityDescription
+    var commodityDescription by SkuSnapshots.commodityDescription
 
     // 标签
-    var commodityTags: String by SkuSnapshots.commodityTags
+    var commodityTags by SkuSnapshots.commodityTags
 }

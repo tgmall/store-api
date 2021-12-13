@@ -30,8 +30,8 @@ class CartItem(id: EntityID<UUID>) : UUIDEntity(id) {
     var cart by Cart referencedOn CartItems.cart
 
     // SKU 的 ID
-    var skuId: UUID by CartItems.skuId
+    var skuId by CartItems.skuId
 
     // SKU 的数量
-    var skuAmount: BigDecimal by CartItems.skuAmount
+    var skuAmount by CartItems.skuAmount
 }

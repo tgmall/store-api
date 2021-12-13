@@ -21,7 +21,7 @@ class Cart(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 
     // 所属用户的 ID
-    var userId: UUID by Carts.userId
+    var userId by Carts.userId
 
     // 购物车中的条目
     val items by CartItem referrersOn CartItems.cart

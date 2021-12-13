@@ -4,7 +4,6 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
-import java.math.BigDecimal
 import java.util.*
 
 object Skus : UUIDTable("sku") {
@@ -27,14 +26,14 @@ class Sku(id: EntityID<UUID>) : UUIDEntity(id) {
     val images by SkuImage referrersOn SkuImages.sku
 
     // 名称
-    var name: String by Skus.name
+    var name by Skus.name
 
     // 描述
-    var description: String by Skus.description
+    var description by Skus.description
 
     // 单位
-    var unit: String by Skus.unit
+    var unit by Skus.unit
 
     // 价格
-    var price: BigDecimal? by Skus.price
+    var price by Skus.price
 }

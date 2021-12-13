@@ -8,7 +8,7 @@ import wang.ralph.store.application.cart.CartDto
 import wang.ralph.store.graphql.GqlUtils
 import wang.ralph.store.models.captcha.Captcha
 import wang.ralph.store.models.captcha.Captchas
-import wang.ralph.store.models.shipping.ShippingOrderStatusEnum
+import wang.ralph.store.models.shipping.ShippingOrderStatus
 import wang.ralph.store.setup.initAllData
 import wang.ralph.store.setup.setupTestingDb
 import java.math.BigDecimal
@@ -123,7 +123,7 @@ class ApplicationTest {
             purchaseOrderId = purchaseOrder.id,
             shipperId = shippers.first().id,
         )
-        assertEquals(ShippingOrderStatusEnum.Created, shippingOrder.status)
+        assertEquals(ShippingOrderStatus.Created, shippingOrder.status)
         // 付款
         // 确认收货
     }

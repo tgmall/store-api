@@ -20,10 +20,10 @@ class SkuImage(id: EntityID<UUID>) : UUIDEntity(id) {
     var sku by Sku referencedOn SkuImages.sku
 
     // 图片的 URI
-    var largeImageUrl: String by SkuImages.largeImageUrl
+    var largeImageUrl by SkuImages.largeImageUrl
 
     // 图片的 URI
-    var smallImageUrl: String by SkuImages.smallImageUrl
+    var smallImageUrl by SkuImages.smallImageUrl
 
 }
 
