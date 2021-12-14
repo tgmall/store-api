@@ -9,6 +9,7 @@ import wang.ralph.store.application.account.PaymentGatewayQuery
 import wang.ralph.store.application.account.PaymentMutation
 import wang.ralph.store.application.auth.UserMutation
 import wang.ralph.store.application.auth.UserQuery
+import wang.ralph.store.application.book.book.BookQuery
 import wang.ralph.store.application.captcha.CaptchaMutation
 import wang.ralph.store.application.cart.CartMutation
 import wang.ralph.store.application.cart.CartQuery
@@ -33,6 +34,9 @@ import wang.ralph.store.models.commodity.Commodities
 import wang.ralph.store.models.commodity.CommodityTags
 import wang.ralph.store.models.commodity.SkuImages
 import wang.ralph.store.models.commodity.Skus
+import wang.ralph.store.models.commodity.book.BookContributors
+import wang.ralph.store.models.commodity.book.Books
+import wang.ralph.store.models.commodity.book.Presses
 import wang.ralph.store.models.portal.CommodityCategories
 import wang.ralph.store.models.portal.CommodityCategoryTags
 import wang.ralph.store.models.price.Prices
@@ -75,7 +79,7 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
                 ShippingOrderQuery(),
                 StockQuery(),
                 PaymentGatewayQuery(),
-
+                BookQuery(),
                 // CaptchaQuery(), // 仅供内部使用，不要对外暴露
             ),
             mutations = listOf(
@@ -96,6 +100,9 @@ fun createEmbeddedServer(port: Int): ApplicationEngine {
 }
 
 val allTables = SchemaUtils.sortTablesByReferences(listOf(
+    Presses,
+    Books,
+    BookContributors,
     Captchas,
     Carts,
     CartItems,

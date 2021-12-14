@@ -23,12 +23,14 @@ fun initCommodityData() {
     }
     skuA1 = Sku.new {
         commodity = commodityA
+        code = "blueA"
         name = "blueA"
         description = "blueA description"
         price = BigDecimal("100.01")
     }
     skuA2 = Sku.new {
         commodity = commodityA
+        code = "greenA"
         name = "greenA"
         description = "greenA description"
         price = BigDecimal("200.00")
@@ -49,12 +51,14 @@ fun initCommodityData() {
     }
     skuB1 = Sku.new {
         commodity = commodityB
+        code = "blueB"
         name = "blueB"
         description = "blueB description"
         price = BigDecimal("1000.0")
     }
     skuB2 = Sku.new {
         commodity = commodityB
+        code = "greenB"
         name = "greenB"
         description = "greenB description"
         price = BigDecimal("2000.0")

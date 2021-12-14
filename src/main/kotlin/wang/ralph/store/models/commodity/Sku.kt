@@ -8,7 +8,8 @@ import java.util.*
 
 object Skus : UUIDTable("sku") {
     val commodity = reference("commodity_id", Commodities)
-    val name = varchar("name", 32)
+    val code = varchar("code", 32).nullable()
+    val name = varchar("name", 255)
     val description = text("description").clientDefault { "" }
     val unit = varchar("unit", 32).default("个")
     val price = decimal("price", 10, 2).nullable()
@@ -24,6 +25,9 @@ class Sku(id: EntityID<UUID>) : UUIDEntity(id) {
 
     // 图片
     val images by SkuImage referrersOn SkuImages.sku
+
+    // 代码
+    var code by Skus.code
 
     // 名称
     var name by Skus.name

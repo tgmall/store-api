@@ -96,7 +96,7 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
     }
 }
 
-private fun encodePassword(password: String): String {
+internal fun encodePassword(password: String): String {
     return BCrypt.withDefaults().hashToString(6, password.toCharArray())
 }
 

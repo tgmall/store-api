@@ -9,6 +9,7 @@ import java.util.*
 
 object Commodities : UUIDTable("commodity") {
     val name = varchar("name", 255)
+    val type = enumerationByName("type", 32, CommodityType::class).default(CommodityType.Default)
     val description = text("description").clientDefault { "" }
 }
 
@@ -29,6 +30,9 @@ class Commodity(id: EntityID<UUID>) : UUIDEntity(id) {
 
     // 商品名称
     var name by Commodities.name
+
+    // 商品类型
+    var type by Commodities.type
 
     // 商品描述
     var description by Commodities.description
